@@ -4,7 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
-    <link rel="icon" href="data:," />
+    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
+    <link rel="apple-touch-icon" href="./icon-180.png" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <meta name="theme-color" content="#7c1d2e" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="ဗေဒင်" />
+    <meta name="description" content="မွေးနေ့ ထည့်ရုံနဲ့ မဟာဘုတ်၊ နေ့နံ၊ ရာသီခွင် ဟောစာတမ်း၊ နာမည် ဂဏန်းဗေဒင်၊ လိုက်ဖက်မှု တွက်ပေးတဲ့ မြန်မာ ဗေဒင်။" />
     <title>မြန်မာ ဗေဒင်</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -143,6 +151,8 @@
       }
       .btn:hover{transform:translateY(-1px);box-shadow:0 12px 24px rgba(92,18,32,.3);}
       .btn:active{transform:translateY(0);}
+      .btn-install{margin-top:14px;padding:10px 18px;border-radius:999px;border:1.5px solid var(--gold-bright);background:transparent;color:var(--gold-bright);font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;}
+      .btn-install:hover{background:var(--gold-soft);}
       @media (prefers-color-scheme: dark){
         .btn{background:linear-gradient(135deg, var(--gold-bright), var(--gold));color:#241a11;}
       }
@@ -258,6 +268,7 @@
           <span class="chip">ရက်စွဲ <b id="todayDate">—</b></span>
           <span class="chip">မြန်မာနှစ် <b id="todayMyYear">—</b></span>
         </div>
+        <button class="btn-install" id="installBtn" type="button" hidden>App အဖြစ် Install လုပ်ပါ</button>
       </header>
 
       <!-- ================= TABS ================= -->
@@ -866,6 +877,25 @@
         "<p>" + e1.name + "နေ့ဖွားရဲ့ အားသာချက်က " + e1.strength + " ဖြစ်ပြီး၊ " + e2.name + "နေ့ဖွားရဲ့ အားသာချက်က " + e2.strength + " ဖြစ်ပါတယ်။ နှစ်ဦးရဲ့ အားသာချက်တွေ ပေါင်းစပ်နိုင်ရင် ဆက်ဆံရေး ပိုမို ခိုင်မာလာပါမယ်။</p></div>";
       box.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+    /* ================= PWA: install ================= */
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function(){
+        navigator.serviceWorker.register("./sw.js").catch(function(){});
+      });
+    }
+    var deferredPrompt = null;
+    var installBtn = document.getElementById("installBtn");
+    window.addEventListener("beforeinstallprompt", function(e){
+      e.preventDefault();
+      deferredPrompt = e;
+      if (installBtn) installBtn.hidden = false;
+    });
+    if (installBtn) installBtn.addEventListener("click", function(){
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(){ deferredPrompt = null; installBtn.hidden = true; });
+    });
+    window.addEventListener("appinstalled", function(){ if (installBtn) installBtn.hidden = true; });
     </script>
   </body>
 </html>
