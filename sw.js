@@ -1,7 +1,9 @@
-/* Myanmar Baydin PWA - v2 (network-first for pages, so fixes reach installed users) */
-const CACHE = "baydin-v2";
+/* Myanmar Baydin PWA - v4 (adds i18n.js; network-first for pages, so fixes reach installed users) */
+const CACHE = "baydin-v4";
 const ASSETS = ["./", "./index.html", "./manifest.webmanifest",
-  "./icon-192.png", "./icon-512.png", "./icon-512-maskable.png", "./icon-180.png"];
+  "./icon-192.png", "./icon-512.png", "./icon-512-maskable.png", "./icon-180.png",
+  "./myanmar-calendar.js", "./auspicious.js", "./astronomy.browser.js", "./chart.js", "./i18n.js",
+  "./sitemap.xml", "./robots.txt"];
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
 });

@@ -159,8 +159,13 @@
       .btn:active{transform:translateY(0);}
       .btn-install{margin-top:14px;padding:10px 18px;border-radius:999px;border:1.5px solid var(--gold-bright);background:transparent;color:var(--gold-bright);font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;}
       .btn-install:hover{background:var(--gold-soft);}
+      .lang-btn{margin-top:14px;margin-left:8px;padding:10px 18px;border-radius:999px;border:1.5px solid var(--gold-bright);background:transparent;color:var(--gold-bright);font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;}
+      .lang-btn:hover{background:var(--gold-soft);}
       .btn-share{margin-top:14px;padding:10px 18px;border-radius:999px;border:1.5px solid var(--maroon);background:transparent;color:var(--maroon);font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;}
       .btn-share:hover{background:var(--maroon-soft);}
+      .saved-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);}
+      .saved-row:last-child{border-bottom:none;}
+      .btn-mini{margin-top:0;padding:7px 12px;font-size:13.5px;}
       @media (prefers-color-scheme: dark){
         .btn{background:linear-gradient(135deg, var(--gold-bright), var(--gold));color:#241a11;}
       }
@@ -269,51 +274,59 @@
             <circle cx="27" cy="4" r="2.2" fill="currentColor" stroke="none"/>
           </svg>
         </div>
-        <h1>မြန်မာ ဗေဒင်</h1>
-        <p>မွေးနေ့ ထည့်ရုံနဲ့ မဟာဘုတ်၊ နေ့နံ၊ ကံကောင်းအရောင်・ဂဏန်း・ကျောက်၊ ရာသီခွင် ဟောစာတမ်း အစုံအလင် တွက်ချက်ပေးပါတယ်။</p>
+        <h1 data-en="Myanmar Baydin">မြန်မာ ဗေဒင်</h1>
+        <p data-en="Enter your birth date and get your Mahabote, birth-day sign, lucky colour, number and stone, and zodiac forecast — all in one place.">မွေးနေ့ ထည့်ရုံနဲ့ မဟာဘုတ်၊ နေ့နံ၊ ကံကောင်းအရောင်・ဂဏန်း・ကျောက်၊ ရာသီခွင် ဟောစာတမ်း အစုံအလင် တွက်ချက်ပေးပါတယ်။</p>
         <div class="today-line">
-          <span class="chip">ယနေ့ <b id="todayDow">—</b></span>
-          <span class="chip">ရက်စွဲ <b id="todayDate">—</b></span>
-          <span class="chip">မြန်မာနှစ် <b id="todayMyYear">—</b></span>
+          <span class="chip"><span data-en="Today">ယနေ့</span> <b id="todayDow">—</b></span>
+          <span class="chip"><span data-en="Date">ရက်စွဲ</span> <b id="todayDate">—</b></span>
+          <span class="chip"><span data-en="Myanmar date">မြန်မာ ရက်စွဲ</span> <b id="todayMyYear">—</b></span>
         </div>
-        <button class="btn-install" id="installBtn" type="button" hidden>App အဖြစ် Install လုပ်ပါ</button>
+        <button class="btn-install" id="installBtn" type="button" hidden data-en="Install as app">App အဖြစ် Install လုပ်ပါ</button>
+        <button class="lang-btn" id="langBtn" type="button" data-en="မြန်မာ">EN</button>
       </header>
 
       <!-- ================= TABS ================= -->
       <nav class="tabs" role="tablist" aria-label="ဗေဒင် အမျိုးအစားများ">
-        <button class="tab-btn active" data-tab="calc" role="tab">မဟာဘုတ် တွက်ရန်</button>
-        <button class="tab-btn" data-tab="zodiac" role="tab">ရာသီခွင် ဟောစာတမ်း</button>
-        <button class="tab-btn" data-tab="name" role="tab">နာမည် ဂဏန်းဗေဒင်</button>
-        <button class="tab-btn" data-tab="love" role="tab">လိုက်ဖက်မှု စစ်ရန်</button>
-        <button class="tab-btn" data-tab="goodday" role="tab">နေ့ကောင်း စစ်ရန်</button>
+        <button class="tab-btn active" data-tab="calc" role="tab" data-en="Calculate Mahabote">မဟာဘုတ် တွက်ရန်</button>
+        <button class="tab-btn" data-tab="zodiac" role="tab" data-en="Zodiac forecast">ရာသီခွင် ဟောစာတမ်း</button>
+        <button class="tab-btn" data-tab="name" role="tab" data-en="Name numerology">နာမည် ဂဏန်းဗေဒင်</button>
+        <button class="tab-btn" data-tab="love" role="tab" data-en="Check compatibility">လိုက်ဖက်မှု စစ်ရန်</button>
+        <button class="tab-btn" data-tab="goodday" role="tab" data-en="Check a good day">နေ့ကောင်း စစ်ရန်</button>
+        <button class="tab-btn" data-tab="chart" role="tab" data-en="Calculate chart">ဇာတာ တွက်ရန်</button>
       </nav>
 
       <!-- ================= PANEL: CALCULATOR ================= -->
       <section class="panel active" id="panel-calc">
         <div class="card">
-          <h2>မွေးနေ့ ထည့်ပြီး တွက်ပါ</h2>
-          <p class="sub">သင့်ရဲ့ မွေးသက္ကရာဇ် (အင်္ဂလိပ်ရက်စွဲ) ကို ထည့်ပါ။ မွေးချိန် သိရင် ထည့်ပေးပါ — ဗုဒ္ဓဟူးနေ့ဖွားတွေအတွက် မွန်းတည့် / မွန်းလွယ် (ရာဟု) ခွဲခြားပေးပါတယ်။</p>
+          <h2 data-en="Calculate with your birth date">မွေးနေ့ ထည့်ပြီး တွက်ပါ</h2>
+          <p class="sub" data-en="Enter your birth date (Gregorian calendar). If you know your birth time, add it — for Wednesday births it separates morning (Mercury) from afternoon (Rahu).">သင့်ရဲ့ မွေးသက္ကရာဇ် (အင်္ဂလိပ်ရက်စွဲ) ကို ထည့်ပါ။ မွေးချိန် သိရင် ထည့်ပေးပါ — ဗုဒ္ဓဟူးနေ့ဖွားတွေအတွက် မွန်းတည့် / မွန်းလွယ် (ရာဟု) ခွဲခြားပေးပါတယ်။</p>
           <form id="calcForm">
             <div class="form-grid">
               <div>
-                <label class="lbl" for="birthDate">မွေးနေ့</label>
+                <label class="lbl" for="birthDate" data-en="Birth date">မွေးနေ့</label>
                 <input type="date" id="birthDate" required />
               </div>
               <div>
-                <label class="lbl" for="birthTime">မွေးချိန် (သိရင် ထည့်ပါ)</label>
+                <label class="lbl" for="birthTime" data-en="Birth time (if known)">မွေးချိန် (သိရင် ထည့်ပါ)</label>
                 <input type="time" id="birthTime" />
               </div>
             </div>
-            <button class="btn" type="submit">ဟောစာတမ်း တွက်ပေးပါ</button>
-            <p class="hint">မြန်မာနှစ်ကို သင်္ကြန် (ဧပြီ ၁၇ ရက် ဝန်းကျင်) ကို နှစ်ကူး အဖြစ် အနီးစပ်ဆုံး တွက်ချက်ထားပါတယ်။</p>
+            <button class="btn" type="submit" data-en="Calculate my forecast">ဟောစာတမ်း တွက်ပေးပါ</button>
+            <p class="hint" data-en="The Myanmar year is calculated with the exact Myanmar lunar calendar.">မြန်မာနှစ်ကို တိကျတဲ့ မြန်မာ လပြက္ခဒိန်နဲ့ တွက်ထားပါတယ်။</p>
           </form>
         </div>
 
         <div class="card hidden" id="calcResult" aria-live="polite"></div>
 
         <div class="card">
-          <h2>နေ့နံ ၈ ပါး အကြောင်း</h2>
-          <p class="sub">မြန်မာ ရိုးရာ ဗေဒင်မှာ မွေးနေ့ အလိုက် ဂြိုဟ်နဲ့ တိရစ္ဆာန် သင်္ကေတ သတ်မှတ်ထားပါတယ်။ ကိုယ့်နေ့နံကို နှိပ်ပြီး အကျဉ်း ဖတ်နိုင်ပါတယ်။</p>
+          <h2 data-en="Saved readings">သိမ်းထားသော ဟောစာတမ်းများ</h2>
+          <p class="sub" data-en="Your saved birth dates — tap one to calculate it again. Saved only on this phone.">သိမ်းထားတဲ့ မွေးနေ့တွေ — နှိပ်ရင် ပြန်တွက်ပေးပါတယ်။ ဖုန်းထဲမှာပဲ သိမ်းထားပါတယ်။</p>
+          <div id="savedList"></div>
+        </div>
+
+        <div class="card">
+          <h2 data-en="About the 8 birth days">နေ့နံ ၈ ပါး အကြောင်း</h2>
+          <p class="sub" data-en="In traditional Myanmar astrology each birth day has a planet and an animal symbol. Tap your birth day to read a short summary.">မြန်မာ ရိုးရာ ဗေဒင်မှာ မွေးနေ့ အလိုက် ဂြိုဟ်နဲ့ တိရစ္ဆာန် သင်္ကေတ သတ်မှတ်ထားပါတယ်။ ကိုယ့်နေ့နံကို နှိပ်ပြီး အကျဉ်း ဖတ်နိုင်ပါတယ်။</p>
           <div class="zodiac-grid" id="dayGrid"></div>
           <div class="reading hidden" id="dayDetail"></div>
         </div>
@@ -322,8 +335,8 @@
       <!-- ================= PANEL: ZODIAC ================= -->
       <section class="panel" id="panel-zodiac">
         <div class="card">
-          <h2>ရာသီခွင် ၁၂ ခု</h2>
-          <p class="sub">သင့်ရာသီခွင်ကို ရွေးပါ — ဒီနေ့ (<span id="zodiacToday"></span>) အတွက် ဟောစာတမ်း ဖတ်ရပါမယ်။ မွေးနေ့ ထည့်ထားရင် သင့်ရာသီခွင်ကို အလိုအလျောက် ရွေးပေးထားပါတယ်။</p>
+          <h2 data-en="The 12 zodiac signs">ရာသီခွင် ၁၂ ခု</h2>
+          <p class="sub"><span data-en="Choose your sign — read today's forecast for today (">သင့်ရာသီခွင်ကို ရွေးပါ — ဒီနေ့ (</span><span id="zodiacToday"></span><span data-en=") . If you entered a birth date, your sign is already selected.">) အတွက် ဟောစာတမ်း ဖတ်ရပါမယ်။ မွေးနေ့ ထည့်ထားရင် သင့်ရာသီခွင်ကို အလိုအလျောက် ရွေးပေးထားပါတယ်။</span></p>
           <div class="zodiac-grid" id="zodiacGrid"></div>
         </div>
         <div class="card hidden" id="zodiacResult" aria-live="polite"></div>
@@ -332,41 +345,52 @@
       <!-- ================= PANEL: NAME NUMEROLOGY ================= -->
       <section class="panel" id="panel-name">
         <div class="card">
-          <h2>နာမည် ဂဏန်းဗေဒင်</h2>
-          <p class="sub">မြန်မာ အက္ခရာတွေကို နေ့နံ အလိုက် သတ်မှတ်ထားတဲ့ ဂဏန်းတွေနဲ့ တွက်ပြီး နာမည်ရဲ့ စုစုပေါင်း ကံဂဏန်း ကို ဖော်ပြပေးပါတယ်။ မြန်မာ နာမည် အပြည့်အစုံ ထည့်ပါ။</p>
+          <h2 data-en="Name numerology">နာမည် ဂဏန်းဗေဒင်</h2>
+          <p class="sub" data-en="Each Myanmar letter has a number by its birth-day group; the numbers are added to show your name's total lucky number. Enter your full Myanmar name.">မြန်မာ အက္ခရာတွေကို နေ့နံ အလိုက် သတ်မှတ်ထားတဲ့ ဂဏန်းတွေနဲ့ တွက်ပြီး နာမည်ရဲ့ စုစုပေါင်း ကံဂဏန်း ကို ဖော်ပြပေးပါတယ်။ မြန်မာ နာမည် အပြည့်အစုံ ထည့်ပါ။</p>
           <form id="nameForm">
-            <label class="lbl" for="nameInput">သင့်နာမည် (မြန်မာလို)</label>
+            <label class="lbl" for="nameInput" data-en="Your name (in Myanmar)">သင့်နာမည် (မြန်မာလို)</label>
             <input type="text" id="nameInput" placeholder="ဥပမာ — မောင်မောင်" autocomplete="off" />
-            <button class="btn" type="submit">နာမည် ကံဂဏန်း တွက်ပါ</button>
-            <p class="hint">အက္ခရာ ခွဲခြမ်းပုံ — အ(၁)၊ က(၂)၊ စ(၃)၊ လ ဝ(၄)၊ ပ(၅)၊ သ(၆)၊ တ(၇)၊ ယ ရ(၈) စတဲ့ ရိုးရာ နေ့နံ အက္ခရာ အုပ်စုများနဲ့ တွက်ပါတယ်။</p>
+            <button class="btn" type="submit" data-en="Calculate my name number">နာမည် ကံဂဏန်း တွက်ပါ</button>
+            <p class="hint" data-en="Letter groups — အ(1), က(2), စ(3), လ ဝ(4), ပ(5), သ(6), တ(7), ယ ရ(8), the traditional birth-day letter groups.">အက္ခရာ ခွဲခြမ်းပုံ — အ(၁)၊ က(၂)၊ စ(၃)၊ လ ဝ(၄)၊ ပ(၅)၊ သ(၆)၊ တ(၇)၊ ယ ရ(၈) စတဲ့ ရိုးရာ နေ့နံ အက္ခရာ အုပ်စုများနဲ့ တွက်ပါတယ်။</p>
           </form>
         </div>
         <div class="card hidden" id="nameResult" aria-live="polite"></div>
 
         <div class="card">
-          <h2>ကံဂဏန်း ၁ မှ ၉ အဓိပ္ပာယ်</h2>
-          <p class="sub">ဂဏန်း တစ်ခုချင်းစီရဲ့ သဘောသဘာဝ အကျဉ်း။</p>
+          <h2 data-en="What numbers 1–9 mean">ကံဂဏန်း ၁ မှ ၉ အဓိပ္ပာယ်</h2>
+          <p class="sub" data-en="A short meaning for each number.">ဂဏန်း တစ်ခုချင်းစီရဲ့ သဘောသဘာဝ အကျဉ်း။</p>
           <div class="stat-grid" id="numGrid"></div>
+        </div>
+
+        <div class="card">
+          <h2 data-en="Naming a baby">နာမည် ပေးခြင်း</h2>
+          <p class="sub" data-en="Enter the birth date — it will show the lucky letters.">မွေးနေ့ ထည့်ပါ — ကံကောင်းတဲ့ အက္ခရာတွေ ပြောပေးပါတယ်။</p>
+          <form id="suggestForm">
+            <label class="lbl" for="suggestDate" data-en="Birth date">မွေးနေ့</label>
+            <input type="date" id="suggestDate" required />
+            <button class="btn" type="submit" data-en="Show lucky letters">ကံကောင်း အက္ခရာ ကြည့်ပါ</button>
+          </form>
+          <div class="reading hidden" id="suggestResult"></div>
         </div>
       </section>
 
       <!-- ================= PANEL: COMPATIBILITY ================= -->
       <section class="panel" id="panel-love">
         <div class="card">
-          <h2>နှစ်ဦး လိုက်ဖက်မှု စစ်ပါ</h2>
-          <p class="sub">နှစ်ယောက်ရဲ့ မွေးနေ့တွေကို ထည့်ပါ။ နေ့နံ မိတ် / ရန် ဆက်နွယ်မှုနဲ့ မဟာဘုတ် အနေအထားကို ကြည့်ပြီး လိုက်ဖက်မှု ရာခိုင်နှုန်း တွက်ပေးပါတယ်။</p>
+          <h2 data-en="Check two people's compatibility">နှစ်ဦး လိုက်ဖက်မှု စစ်ပါ</h2>
+          <p class="sub" data-en="Enter both birth dates. It checks the birth-day friend/rival relation and Mahabote positions, then gives a compatibility percentage.">နှစ်ယောက်ရဲ့ မွေးနေ့တွေကို ထည့်ပါ။ နေ့နံ မိတ် / ရန် ဆက်နွယ်မှုနဲ့ မဟာဘုတ် အနေအထားကို ကြည့်ပြီး လိုက်ဖက်မှု ရာခိုင်နှုန်း တွက်ပေးပါတယ်။</p>
           <form id="loveForm">
             <div class="form-grid">
               <div>
-                <label class="lbl" for="loveDate1">ပထမလူ မွေးနေ့</label>
+                <label class="lbl" for="loveDate1" data-en="First person's birth date">ပထမလူ မွေးနေ့</label>
                 <input type="date" id="loveDate1" required />
               </div>
               <div>
-                <label class="lbl" for="loveDate2">ဒုတိယလူ မွေးနေ့</label>
+                <label class="lbl" for="loveDate2" data-en="Second person's birth date">ဒုတိယလူ မွေးနေ့</label>
                 <input type="date" id="loveDate2" required />
               </div>
             </div>
-            <button class="btn" type="submit">လိုက်ဖက်မှု စစ်ပါ</button>
+            <button class="btn" type="submit" data-en="Check compatibility">လိုက်ဖက်မှု စစ်ပါ</button>
           </form>
         </div>
         <div class="card hidden" id="loveResult" aria-live="polite"></div>
@@ -375,36 +399,80 @@
       <!-- ================= PANEL: GOOD DAY ================= -->
       <section class="panel" id="panel-goodday">
         <div class="card">
-          <h2>နေ့ကောင်း စစ်ပါ</h2>
-          <p class="sub">စစ်ချင်တဲ့ ရက်စွဲကို ထည့်ပါ — ဘာနေ့လဲ၊ လဆန်း / လဆုတ် ခန့်မှန်းခြေ၊ သင့်မွေးနေ့နံနဲ့ မိတ် / ရန် ဆက်နွယ်မှု ရှိမရှိ ပြောပေးပါတယ်။</p>
+          <h2 data-en="Check a good day">နေ့ကောင်း စစ်ပါ</h2>
+          <p class="sub" data-en="Enter the date to check — which day it is, the Myanmar date, Raza / Pyathada, and how it relates to your birth day.">စစ်ချင်တဲ့ ရက်စွဲကို ထည့်ပါ — ဘာနေ့လဲ၊ မြန်မာ ရက်စွဲ၊ ရက်ရာဇာ / ပြဿဒါး၊ သင့်မွေးနေ့နံနဲ့ မိတ် / ရန် ဆက်နွယ်မှု ရှိမရှိ ပြောပေးပါတယ်။</p>
           <form id="gooddayForm">
             <div class="form-grid">
               <div>
-                <label class="lbl" for="gdBirth">သင့်မွေးနေ့</label>
+                <label class="lbl" for="gdBirth" data-en="Your birth date">သင့်မွေးနေ့</label>
                 <input type="date" id="gdBirth" required />
               </div>
               <div>
-                <label class="lbl" for="gdDate">စစ်ချင်တဲ့ ရက်</label>
+                <label class="lbl" for="gdDate" data-en="Date to check">စစ်ချင်တဲ့ ရက်</label>
                 <input type="date" id="gdDate" required />
               </div>
             </div>
-            <button class="btn" type="submit">နေ့ကောင်း စစ်ပါ</button>
-            <p class="hint">လဆန်း / လဆုတ် ကို လ တက်ချိန် ခန့်မှန်းနည်းနဲ့ တွက်ထားလို့ ±၁ ရက် ကွာနိုင်ပါတယ်။</p>
+            <button class="btn" type="submit" data-en="Check this day">နေ့ကောင်း စစ်ပါ</button>
+            <p class="hint" data-en="Calculated with the exact Myanmar lunar calendar (including leap years). Some Raza days vary between traditions.">မြန်မာ လပြက္ခဒိန် အတိအကျ (ဝါထပ်နှစ် အပါ) နဲ့ တွက်ထားပါတယ်။ ရက်ရာဇာ အချို့ မူကွဲ ရှိသည်။</p>
           </form>
         </div>
         <div class="card hidden" id="gooddayResult" aria-live="polite"></div>
       </section>
 
+      <!-- ================= PANEL: CHART ================= -->
+      <section class="panel" id="panel-chart">
+        <div class="card">
+          <h2 data-en="Calculate a birth chart">ဇာတာ တွက်ရန်</h2>
+          <p class="sub" data-en="Enter birth date, birth time and birth place — it calculates the true planet positions, ascendant, nakshatra and dasha.">မွေးနေ့၊ မွေးချိန်နဲ့ မွေးတဲ့နေရာ ထည့်ပါ — ဂြိုဟ် အစစ် နေရာတွေ၊ လဂ်၊ နက္ခတ်၊ ဒသာ တွက်ပေးပါတယ်။</p>
+          <form id="chartForm">
+            <div class="form-grid">
+              <div>
+                <label class="lbl" for="chartDate" data-en="Birth date">မွေးနေ့</label>
+                <input type="date" id="chartDate" required />
+              </div>
+              <div>
+                <label class="lbl" for="chartTime" data-en="Birth time">မွေးချိန်</label>
+                <input type="time" id="chartTime" />
+              </div>
+            </div>
+            <div class="form-grid">
+              <div>
+                <label class="lbl" for="chartPlace" data-en="Birth place">မွေးတဲ့နေရာ</label>
+                <select id="chartPlace">
+                  <option value="16.84,96.15" data-en="Yangon">ရန်ကုန်</option>
+                  <option value="21.98,96.09" data-en="Mandalay">မန္တလေး</option>
+                  <option value="19.76,96.08" data-en="Naypyidaw">နေပြည်တော်</option>
+                  <option value="21.68,100.02" data-en="Mong La">မိုင်းလား</option>
+                  <option value="16.49,97.63" data-en="Mawlamyine">မော်လမြိုင်</option>
+                  <option value="17.34,96.48" data-en="Bago">ပဲခူး</option>
+                  <option value="custom" data-en="Other (enter latitude/longitude)">အခြား (လက်တီကျု/လောင်ဂျီကျု ထည့်ပါ)</option>
+                </select>
+              </div>
+              <div>
+                <label class="lbl" for="chartLatLon" data-en="Latitude / longitude">လက်တီကျု / လောင်ဂျီကျု</label>
+                <input type="text" id="chartLatLon" value="16.84, 96.15" />
+              </div>
+            </div>
+            <button class="btn" type="submit" data-en="Calculate my chart">ဇာတာ တွက်ပေးပါ</button>
+            <p class="hint" data-en="Without a birth time the ascendant cannot be calculated — only planet positions and dasha are shown. Planet positions are calculated exactly with astronomy (Astronomy Engine).">မွေးချိန် မသိရင် လဂ် တွက်မရပါ — ဂြိုဟ် နေရာနဲ့ ဒသာပဲ ပြပေးပါတယ်။ ဂြိုဟ် နေရာတွေကို နက္ခတ္တဗေဒ (Astronomy Engine) နဲ့ အတိအကျ တွက်ထားပါတယ်။</p>
+          </form>
+        </div>
+        <div class="card hidden" id="chartResult" aria-live="polite"></div>
+      </section>
+
       <footer>
-        <p>ဤဟောစာတမ်းများသည် မြန်မာ ရိုးရာ ဗေဒင် အယူအဆ အပေါ် အခြေခံပြီး ဖျော်ဖြေရေးနှင့် အထွေထွေ သိမှတ်ဖွယ် အတွက်သာ ဖြစ်ပါတယ်။ ဘဝ အဆုံးအဖြတ် ကြီးကြီးမားမားတွေကို ကိုယ်ပိုင် အသိဉာဏ်နဲ့ ဆုံးဖြတ်ပါ။</p>
+        <p data-en="These readings are based on traditional Myanmar astrology and are for entertainment and general interest only. Make important life decisions with your own judgement.">ဤဟောစာတမ်းများသည် မြန်မာ ရိုးရာ ဗေဒင် အယူအဆ အပေါ် အခြေခံပြီး ဖျော်ဖြေရေးနှင့် အထွေထွေ သိမှတ်ဖွယ် အတွက်သာ ဖြစ်ပါတယ်။ ဘဝ အဆုံးအဖြတ် ကြီးကြီးမားမားတွေကို ကိုယ်ပိုင် အသိဉာဏ်နဲ့ ဆုံးဖြတ်ပါ။</p>
       </footer>
     </div>
 
+    <script src="./myanmar-calendar.js"></script>
+    <script src="./auspicious.js"></script>
+    <script src="./i18n.js"></script>
     <script>
     "use strict";
     /* ================= Helpers ================= */
     var MY_DIGITS = ["၀","၁","၂","၃","၄","၅","၆","၇","၈","၉"];
-    function toMy(n){ return String(n).replace(/[0-9]/g, function(d){ return MY_DIGITS[+d]; }); }
+    function toMy(n){ if (window.BAYDIN_LANG === "en") return String(n); return String(n).replace(/[0-9]/g, function(d){ return MY_DIGITS[+d]; }); }
     function el(id){ return document.getElementById(id); }
     function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
     function dayOfYear(d){
@@ -421,8 +489,11 @@
       var r = x - Math.floor(x);
       return min + Math.floor(r * (max - min + 1));
     }
-    /* Myanmar year: Thingyan ~ Apr 17 as new-year boundary (approximation) */
+    /* Myanmar year: exact via MyanmarCal when available, else Thingyan ~Apr 17 approximation */
     function myanmarYear(d){
+      if (typeof MyanmarCal !== "undefined" && MyanmarCal.toMyanmar){
+        try { return MyanmarCal.toMyanmar(d).myYear; } catch(e){}
+      }
       var y = d.getFullYear();
       var afterThingyan = (d.getMonth() > 3) || (d.getMonth() === 3 && d.getDate() >= 17);
       return afterThingyan ? y - 638 : y - 639;
@@ -535,15 +606,84 @@
 
     /* Share helper: Web Share API with clipboard fallback */
     function shareText(text, btn){
-      var full = text + "\n\nမြန်မာ ဗေဒင် — https://luuzoe.github.io/myanmar-baydin/";
-      function done(msg){ if (btn){ btn.textContent = msg; setTimeout(function(){ btn.textContent = "မျှဝေရန်"; }, 2500); } }
+      var full = text + "\n\n" + T("shareFooter");
+      function done(msg){ if (btn){ btn.textContent = msg; setTimeout(function(){ btn.textContent = T("shareBtn"); }, 2500); } }
       if (navigator.share){
-        navigator.share({ title: "မြန်မာ ဗေဒင်", text: full }).then(function(){ done("မျှဝေပြီးပါပြီ"); }).catch(function(){});
+        navigator.share({ title: T("siteName"), text: full }).then(function(){ done(T("shared")); }).catch(function(){});
       } else if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(full).then(function(){ done("ကူးယူပြီးပါပြီ"); }).catch(function(){ done("ကူးမရပါ"); });
-      } else { done("မျှဝေလို့ မရပါ"); }
+        navigator.clipboard.writeText(full).then(function(){ done(T("copied")); }).catch(function(){ done(T("copyFail")); });
+      } else { done(T("shareUnavailable")); }
     }
-    function shareBtnHtml(){ return '<button class="btn-share" type="button">မျှဝေရန်</button>'; }
+    function shareBtnHtml(){ return '<button class="btn-share" type="button">' + T("shareBtn") + '</button>'; }
+    function imageShareBtnHtml(){ return '<button class="btn-share btn-img" type="button">' + T("imgBtn") + '</button>'; }
+    /* Draw a shareable result card on canvas and share/download it as PNG. */
+    function shareImageCard(title, lines, btn){
+      function done(msg){ if (btn){ btn.textContent = msg; setTimeout(function(){ btn.textContent = T("imgBtn"); }, 2500); } }
+      function draw(){
+        var W = 1080, pad = 72, titleSize = 46, bodySize = 36, footSize = 30;
+        var c = document.createElement("canvas");
+        var ctx = c.getContext("2d");
+        var titleFont = "bold " + titleSize + "px Padauk, 'Noto Serif Myanmar', sans-serif";
+        var bodyFont = bodySize + "px Padauk, 'Noto Serif Myanmar', sans-serif";
+        var footFont = footSize + "px Padauk, 'Noto Serif Myanmar', sans-serif";
+        function wrap(text, font, maxW){
+          ctx.font = font;
+          var out = [], words = String(text).split(" ");
+          var cur = "";
+          words.forEach(function(w){
+            var t = cur ? cur + " " + w : w;
+            if (ctx.measureText(t).width <= maxW){ cur = t; return; }
+            if (cur) out.push(cur);
+            while (ctx.measureText(w).width > maxW && w.length > 1){ /* split long unspaced word */
+              var k = 1;
+              while (k < w.length && ctx.measureText(w.slice(0, k + 1)).width <= maxW) k++;
+              out.push(w.slice(0, k)); w = w.slice(k);
+            }
+            cur = w;
+          });
+          if (cur) out.push(cur);
+          return out;
+        }
+        var titleLines = wrap(title, titleFont, W - pad * 2);
+        var bodyLines = [];
+        lines.forEach(function(l){ bodyLines = bodyLines.concat(wrap(l, bodyFont, W - pad * 2)); });
+        var H = pad + titleLines.length * 62 + 30 + bodyLines.length * 56 + 90;
+        c.width = W; c.height = H;
+        var g = ctx.createLinearGradient(0, 0, 0, H);
+        g.addColorStop(0, "#5c1220"); g.addColorStop(1, "#7c1d2e");
+        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+        ctx.strokeStyle = "#c9a227"; ctx.lineWidth = 6; ctx.strokeRect(18, 18, W - 36, H - 36);
+        ctx.strokeStyle = "#c9a227"; ctx.lineWidth = 2; ctx.strokeRect(34, 34, W - 68, H - 68);
+        ctx.fillStyle = "#f0d9a8"; ctx.textAlign = "center";
+        var y = pad + 46;
+        ctx.font = titleFont;
+        titleLines.forEach(function(l){ ctx.fillText(l, W / 2, y); y += 62; });
+        y += 10;
+        ctx.fillStyle = "#fdf6e3"; ctx.font = bodyFont;
+        bodyLines.forEach(function(l){ ctx.fillText(l, W / 2, y); y += 56; });
+        ctx.fillStyle = "#c9a227"; ctx.font = footFont;
+        ctx.fillText(T("imgFooter"), W / 2, H - pad + 18);
+        if (c.toBlob){
+          c.toBlob(function(blob){
+            if (!blob){ done(T("imgFail")); return; }
+            var file = new File([blob], "baydin.png", { type: "image/png" });
+            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })){
+              navigator.share({ files: [file], title: T("siteName") }).then(function(){ done(T("shared")); }).catch(function(){});
+            } else {
+              var a = document.createElement("a");
+              a.href = URL.createObjectURL(blob); a.download = "baydin.png";
+              document.body.appendChild(a); a.click();
+              setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+              done(T("imgSaved"));
+            }
+          }, "image/png");
+        } else { done(T("imgFail")); }
+      }
+      if (document.fonts && document.fonts.ready){
+        var to = setTimeout(draw, 1500);
+        document.fonts.ready.then(function(){ clearTimeout(to); draw(); });
+      } else draw();
+    }
 
     /* Canonical layout order for the diagram (3x3 with center motif) */
     var BOTE_LAYOUT = [6, 3, 1, 0, null, 2, 4, 5];
@@ -687,9 +827,9 @@
       "4-6":"အိမ်ထောင်ရန် (ဓမ္မာ)", "1-5":"အိမ်ထောင်ရန် (သောက)", "0-3":"အိမ်ထောင်ရန် (အင်း၀)", "2-7":"အိမ်ထောင်ရန် (ရာဇာ)"
     };
     function pairLabel(a, b){
-      if (a === b) return "နေ့နံတူ";
+      if (a === b) return T("sameDay");
       var k1 = a + "-" + b, k2 = b + "-" + a;
-      return PAIR_LABELS[k1] || PAIR_LABELS[k2] || "ရိုးရာ စာရင်းဝင် မဟုတ်";
+      return PAIR_LABELS[k1] || PAIR_LABELS[k2] || T("notTraditional");
     }
     function pairScore(a, b){
       if (a === b) return 90;
@@ -699,11 +839,15 @@
       return 70;
     }
     function verdictOf(score){
-      if (score >= 88) return { t:"အလွန် လိုက်ဖက်ပါတယ်", d:"နေ့နံ အရ မိတ်ဖက် ကောင်းတွေ ဖြစ်ပြီး တစ်ဦးကို တစ်ဦး အားဖြည့် ပေးနိုင်ပါတယ်။ ဆက်ဆံရေး ရေရှည် တည်တံ့ဖို့ အခြေခံ ကောင်းပါတယ်။" };
-      if (score >= 78) return { t:"လိုက်ဖက်မှု ကောင်းပါတယ်", d:"အများအားဖြင့် သဟဇာတ ဖြစ်ပြီး အနည်းငယ် နားလည်မှု လွဲတာလောက်ပဲ ရှိတတ်ပါတယ်။ စကားပြော ဆိုမှု ပွင့်လင်းရင် အဆင်ပြေ ပါမယ်။" };
-      if (score >= 62) return { t:"အလယ်အလတ် လိုက်ဖက်ပါတယ်", d:"စိတ်သဘာဝ မတူတဲ့ အပိုင်းတွေ ရှိပေမယ့် လေးစား နားလည်မှု ထားရင် ကောင်းမွန်တဲ့ ဆက်ဆံရေး ဖြစ်လာနိုင်ပါတယ်။" };
-      return { t:"ကြိုးစား နားလည်ဖို့ လိုပါတယ်", d:"နေ့နံ အရ ရန်ဖက် သဘော ပါတဲ့အတွက် အငြင်းပွားမှု ဖြစ်လွယ်ပါတယ်။ စိတ်ရှည်မှု၊ ခွင့်လွှတ်မှုနဲ့ ဆက်သွယ်မှု ကောင်းကောင်း ထားမှ ရေရှည် အဆင်ပြေပါမယ်။" };
+      if (score >= 88) return { t:T("verdict88t"), d:T("verdict88d") };
+      if (score >= 78) return { t:T("verdict78t"), d:T("verdict78d") };
+      if (score >= 62) return { t:T("verdict62t"), d:T("verdict62d") };
+      return { t:T("verdictLowt"), d:T("verdictLowd") };
     }
+
+    /* Language: apply English data overrides before any rendering */
+    if (window.BAYDIN_LANG === "en" && window.BAYDIN_I18N) BAYDIN_I18N.applyEnglishData();
+    if (window.BAYDIN_I18N) BAYDIN_I18N.applyLangToDom();
 
     /* ================= Tabs ================= */
     var tabBtns = document.querySelectorAll(".tab-btn");
@@ -727,10 +871,12 @@
       var now = new Date();
       var dowName = DAYS[now.getDay()].name;
       var MONTHS_MY = ["ဇန်နဝါရီ","ဖေဖော်ဝါရီ","မတ်","ဧပြီ","မေ","ဇွန်","ဇူလိုင်","ဩဂုတ်","စက်တင်ဘာ","အောက်တိုဘာ","နိုဝင်ဘာ","ဒီဇင်ဘာ"];
-      el("todayDow").textContent = dowName + "နေ့";
-      el("todayDate").textContent = toMy(now.getDate()) + " " + MONTHS_MY[now.getMonth()] + " " + toMy(now.getFullYear());
-      el("todayMyYear").textContent = toMy(myanmarYear(now)) + " ခု";
-      el("zodiacToday").textContent = toMy(now.getDate()) + " " + MONTHS_MY[now.getMonth()] + " " + toMy(now.getFullYear());
+      el("todayDow").textContent = dowName + T("daySuffix");
+      var MONTHS = (window.BAYDIN_LANG === "en" && window.BAYDIN_MONTHS_EN) ? window.BAYDIN_MONTHS_EN : MONTHS_MY;
+      el("todayDate").textContent = toMy(now.getDate()) + " " + MONTHS[now.getMonth()] + " " + toMy(now.getFullYear());
+      var mydNow = (typeof MyanmarCal !== "undefined" && MyanmarCal.toMyanmar) ? MyanmarCal.toMyanmar(now) : null;
+      el("todayMyYear").textContent = mydNow ? (toMy(mydNow.myYear) + " " + (window.BAYDIN_LANG === "en" ? mydNow.monthNameEn : mydNow.monthName) + " " + T(mydNow.moonPhase === "waxing" ? "waxing" : "waning") + toMy(mydNow.moonDay)) : (toMy(myanmarYear(now)) + T("yearSuffix"));
+      el("zodiacToday").textContent = toMy(now.getDate()) + " " + MONTHS[now.getMonth()] + " " + toMy(now.getFullYear());
     })();
 
     /* ================= Day grid (နေ့နံ ၈ ပါး) ================= */
@@ -740,18 +886,18 @@
         var b = document.createElement("button");
         b.type = "button";
         b.className = "z-card";
-        b.innerHTML = '<div class="glyph">' + d.glyph + '</div><div class="nm">' + d.name + '</div><div class="dt">' + d.animal + " ・ ဂဏန်း " + toMy(d.num) + "</div>";
+        b.innerHTML = '<div class="glyph">' + d.glyph + '</div><div class="nm">' + d.name + '</div><div class="dt">' + d.animal + " ・ " + T("numberWord") + toMy(d.num) + "</div>";
         b.addEventListener("click", function(){
           grid.querySelectorAll(".z-card").forEach(function(c){ c.classList.remove("active"); });
           b.classList.add("active");
           var box = el("dayDetail");
           box.classList.remove("hidden");
           box.innerHTML =
-            "<h4>" + d.name + "နေ့ဖွား — " + d.animal + " (ဂြိုဟ် - " + d.planet + ")</h4>" +
+            "<h4>" + d.name + T("born") + " — " + d.animal + " (" + T("planetWord") + " " + d.planet + ")</h4>" +
             "<p>" + d.trait + "</p>" +
-            "<h4>အားသာချက်</h4><p>" + d.strength + "</p>" +
-            "<h4>သတိထားရန်</h4><p>" + d.caution + "</p>" +
-            "<h4>ကံကောင်းစေသော အရာများ</h4><p>အရောင် — " + d.color + " ・ ဂဏန်း — " + toMy(d.num) + " ・ ကျောက် — " + d.gem + " ・ လားရာ — " + d.dir + "</p>";
+            "<h4>" + T("strengthsH") + "</h4><p>" + d.strength + "</p>" +
+            "<h4>" + T("cautionsH") + "</h4><p>" + d.caution + "</p>" +
+            "<h4>" + T("luckyThingsH") + "</h4><p>" + T("colourLabel") + d.color + " ・ " + T("numberLabel") + toMy(d.num) + " ・ " + T("stoneLabel") + d.gem + " ・ " + T("directionLabel") + d.dir + "</p>";
           box.scrollIntoView({ behavior: "smooth", block: "nearest" });
         });
         grid.appendChild(b);
@@ -786,39 +932,49 @@
         if (idx === 4){ diagram += '<div class="bote-center" aria-hidden="true">✦</div>'; return; }
         var c = MAHABOTE[cellVal];
         var hit = cellVal === rem;
-        diagram += '<div class="bote-cell' + (hit ? " hit" : "") + '"><span>' + c.name + "</span><small>" + (hit ? "သင့်ဘုတ်" : c.tag) + "</small></div>";
+        diagram += '<div class="bote-cell' + (hit ? " hit" : "") + '"><span>' + c.name + "</span><small>" + (hit ? T("yourBote") : c.tag) + "</small></div>";
       });
       /* Append a 9th info cell so the 3x3 grid is complete */
-      diagram += '<div class="bote-cell"><span>' + toMy(my) + '</span><small>မြန်မာ သက္ကရာဇ်</small></div>';
+      diagram += '<div class="bote-cell"><span>' + toMy(my) + '</span><small>' + T("meEra") + '</small></div>';
 
       el("calcResult").classList.remove("hidden");
       el("calcResult").innerHTML =
         '<div class="result-head">' +
           '<div class="animal-badge"><span class="glyph">' + day.glyph + '</span><span class="cap">' + day.animal + "</span></div>" +
-          "<div><h3>" + day.name + "နေ့ဖွား ・ " + bote.name + "ဘုတ်</h3>" +
-          "<p>မြန်မာသက္ကရာဇ် " + toMy(my) + " ခုနှစ် ・ အသက် " + toMy(ageOf(date)) + " နှစ် ・ ရာသီခွင် " + z.name + " (" + z.en + ")</p></div>" +
+          "<div><h3>" + day.name + T("born") + " ・ " + bote.name + T("boteSuffix") + "</h3>" +
+          "<p>" + T("calcSub", [toMy(my), toMy(ageOf(date)), zodiacDisplay(z)]) + "</p></div>" +
         "</div>" +
         '<div class="stat-grid">' +
-          '<div class="stat"><div class="k">နေ့နံ / ဂြိုဟ်</div><div class="v">' + day.name + " / " + day.planet + "</div></div>" +
-          '<div class="stat"><div class="k">မဟာဘုတ်</div><div class="v">' + bote.name + " — " + bote.tag + "</div></div>" +
-          '<div class="stat"><div class="k">ကံကောင်း အရောင်</div><div class="v"><span class="swatch" style="background:' + day.swatch + '"></span>' + day.color + "</div></div>" +
-          '<div class="stat"><div class="k">ကံကောင်း ဂဏန်း</div><div class="v">' + toMy(day.num) + "</div></div>" +
-          '<div class="stat"><div class="k">ကံကောင်း ကျောက်</div><div class="v">' + day.gem + "</div></div>" +
-          '<div class="stat"><div class="k">ကံကောင်း လားရာ</div><div class="v">' + day.dir + "</div></div>" +
+          '<div class="stat"><div class="k">' + T("dayPlanetStat") + '</div><div class="v">' + day.name + " / " + day.planet + "</div></div>" +
+          '<div class="stat"><div class="k">' + T("mahaboteStat") + '</div><div class="v">' + bote.name + " — " + bote.tag + "</div></div>" +
+          '<div class="stat"><div class="k">' + T("luckyColourStat") + '</div><div class="v"><span class="swatch" style="background:' + day.swatch + '"></span>' + day.color + "</div></div>" +
+          '<div class="stat"><div class="k">' + T("luckyNumberStat") + '</div><div class="v">' + toMy(day.num) + "</div></div>" +
+          '<div class="stat"><div class="k">' + T("luckyStoneStat") + '</div><div class="v">' + day.gem + "</div></div>" +
+          '<div class="stat"><div class="k">' + T("luckyDirectionStat") + '</div><div class="v">' + day.dir + "</div></div>" +
         "</div>" +
         '<div class="reading">' +
-          "<h4>မဟာဘုတ် ပုံစံ</h4>" +
+          "<h4>" + T("mahaboteChartH") + "</h4>" +
           '<div class="bote-diagram">' + diagram + "</div>" +
-          "<p>တွက်နည်း — မြန်မာနှစ် " + toMy(mb.myYear) + " ကို ၇ နဲ့စားတော့ အကြွင်း " + toMy(mb.rem) + "၊ " + BOTE_PLANET_NAMES[mb.startPlanet] + " ဂြိုဟ် ဘင်္ဂဘုတ်မှာ စပြီး " + day.name + "နေ့ဖွား (" + (mb.rahu ? "ရာဟု — ဗုဒ္ဓဟူး ဘုတ်ကို ယူပါတယ်" : BOTE_PLANET_NAMES[mb.birthPlanet] + " ဂြိုဟ်") + ") က " + bote.name + "ဘုတ်မှာ ကျပါတယ်။</p>" +
-          "<h4>" + bote.name + "ဘုတ် အဟော</h4><p>" + bote.meaning + "</p>" +
-          "<h4>အကြံပြုချက်</h4><p>" + bote.advice + "</p>" +
-          "<h4>" + day.name + "နေ့ဖွား စရိုက်</h4><p>" + day.trait + "</p>" +
-          "<h4>အားသာချက် / သတိထားရန်</h4><p>အားသာချက် — " + day.strength + "<br/>သတိထားရန် — " + day.caution + "</p>" +
-          "<h4>ယနေ့ ကံကြမ္မာ " + starRow(luckStars) + "</h4><p>" + luckText + "</p>" +
-          '<p style="margin-top:14px;"><a href="#" id="goZodiac" style="color:var(--maroon);font-weight:700;">သင့် ရာသီခွင် (' + z.name + ") ဒီနေ့ ဟောစာတမ်း အပြည့်အစုံ ဖတ်ရန် →</a></p>" +
-        "</div>" + shareBtnHtml();
+          "<p>" + T("methodNote", [toMy(mb.myYear), toMy(mb.rem), BOTE_PLANET_NAMES[mb.startPlanet], day.name, mb.rahu ? T("rahuTakes") : T("planetName", [BOTE_PLANET_NAMES[mb.birthPlanet]]), bote.name]) + "</p>" +
+          "<h4>" + bote.name + T("boteForecast") + "</h4><p>" + bote.meaning + "</p>" +
+          "<h4>" + T("adviceH") + "</h4><p>" + bote.advice + "</p>" +
+          "<h4>" + day.name + T("bornCharacter") + "</h4><p>" + day.trait + "</p>" +
+          "<h4>" + T("strengthsCautionsH") + "</h4><p>" + T("strengthPrefix") + day.strength + "<br/>" + T("cautionPrefix") + day.caution + "</p>" +
+          "<h4>" + T("todayLuckH") + starRow(luckStars) + "</h4><p>" + luckText + "</p>" +
+          '<p style="margin-top:14px;"><a href="#" id="goZodiac" style="color:var(--maroon);font-weight:700;">' + T("goZodiac") + '</a></p>' +
+        "</div>" + shareBtnHtml() + '<button class="btn-share btn-save" type="button">' + T("saveBtn") + '</button>' + imageShareBtnHtml();
       el("calcResult").querySelector(".btn-share").addEventListener("click", function(){
-        shareText(day.name + "နေ့ဖွား ・ " + bote.name + "ဘုတ် ・ ရာသီခွင် " + z.name + " ・ ကံကောင်းအရောင် " + day.color + " ・ ဂဏန်း " + toMy(day.num), this);
+        shareText(T("calcShare", [day.name, bote.name, zodiacDisplay(z), day.color, toMy(day.num)]), this);
+      });
+      el("calcResult").querySelector(".btn-save").addEventListener("click", function(){
+        saveReading({ date: el("birthDate").value, label: T("saveLabel", [day.name, bote.name, z.name]) });
+        this.textContent = T("savedMsg");
+      });
+      el("calcResult").querySelector(".btn-img").addEventListener("click", function(){
+        shareImageCard(T("calcImgTitle", [day.name, bote.name]), [
+          T("calcImgL1", [zodiacDisplay(z)]), T("calcImgL2", [day.color]),
+          T("calcImgL3", [toMy(day.num)]), T("calcImgL4", [day.gem])
+        ], this);
       });
       el("calcResult").scrollIntoView({ behavior: "smooth", block: "start" });
       var gz = el("goZodiac");
@@ -850,23 +1006,30 @@
       el("zodiacResult").classList.remove("hidden");
       el("zodiacResult").innerHTML =
         '<div class="result-head">' +
-          '<div class="animal-badge"><span class="glyph" style="font-size:36px;">' + z.glyph + '</span><span class="cap">' + z.element + "ဓာတ်</span></div>" +
-          "<div><h3>" + z.name + "ရာသီ (" + z.en + ")</h3>" +
-          "<p>" + z.dates + " ・ အုပ်စိုးဂြိုဟ် — " + z.ruler + " ・ ဓာတ် — " + z.element + "</p></div>" +
+          '<div class="animal-badge"><span class="glyph" style="font-size:36px;">' + z.glyph + '</span><span class="cap">' + z.element + T("elementSuffix") + "</span></div>" +
+          "<div><h3>" + zodiacDisplay(z) + "</h3>" +
+          "<p>" + z.dates + " ・ " + T("rulerLabel") + z.ruler + " ・ " + T("elementLabel") + z.element + "</p></div>" +
         "</div>" +
         '<div class="reading" style="margin-top:0;">' +
           "<p>" + z.trait + "</p>" +
-          "<h4>ဒီနေ့ အဟော</h4><p>" + seededPick(DAILY_GENERAL, seed + 11) + "</p>" +
-          "<h4>အလုပ်</h4><p>" + seededPick(DAILY_WORK, seed + 12) + "</p>" +
-          "<h4>ငွေကြေး</h4><p>" + seededPick(DAILY_MONEY, seed + 13) + "</p>" +
-          "<h4>အချစ်ရေး</h4><p>" + seededPick(DAILY_LOVE, seed + 14) + "</p>" +
-          "<h4>ကျန်းမာရေး</h4><p>" + seededPick(DAILY_HEALTH, seed + 15) + "</p>" +
-          "<h4>ကံ အဆင့်များ</h4>" +
-          meter("အလုပ်", work) + meter("ငွေကြေး", money) + meter("အချစ်", love) + meter("ကျန်းမာရေး", health) +
-          "<h4>ကံကောင်း ဂဏန်း / အရောင်</h4><p>ဂဏန်း — " + toMy(luckyNum) + " ・ အရောင် — " + luckyColor + "</p>" +
-        "</div>" + shareBtnHtml();
+          "<h4>" + T("todayForecastH") + "</h4><p>" + seededPick(DAILY_GENERAL, seed + 11) + "</p>" +
+          "<h4>" + T("workH") + "</h4><p>" + seededPick(DAILY_WORK, seed + 12) + "</p>" +
+          "<h4>" + T("moneyH") + "</h4><p>" + seededPick(DAILY_MONEY, seed + 13) + "</p>" +
+          "<h4>" + T("loveH") + "</h4><p>" + seededPick(DAILY_LOVE, seed + 14) + "</p>" +
+          "<h4>" + T("healthH") + "</h4><p>" + seededPick(DAILY_HEALTH, seed + 15) + "</p>" +
+          "<h4>" + T("luckLevelsH") + "</h4>" +
+          meter(T("workH"), work) + meter(T("moneyH"), money) + meter(T("loveH"), love) + meter(T("healthH"), health) +
+          "<h4>" + T("luckyNumColourH") + "</h4><p>" + T("numColourLine", [toMy(luckyNum), luckyColor]) + "</p>" +
+        "</div>" + shareBtnHtml() + imageShareBtnHtml();
       el("zodiacResult").querySelector(".btn-share").addEventListener("click", function(){
-        shareText(z.name + "ရာသီ (" + z.en + ") ဒီနေ့ ဟောစာတမ်း — အလုပ် " + toMy(work) + "%, ငွေ " + toMy(money) + "%, အချစ် " + toMy(love) + "%, ကျန်းမာရေး " + toMy(health) + "% ・ ကံကောင်းဂဏန်း " + toMy(luckyNum), this);
+        shareText(T("zodiacShare", [zodiacDisplay(z), toMy(work), toMy(money), toMy(love), toMy(health), toMy(luckyNum)]), this);
+      });
+      el("zodiacResult").querySelector(".btn-img").addEventListener("click", function(){
+        shareImageCard(T("zodiacImgTitle", [zodiacDisplay(z)]), [
+          T("zodiacImgL1", [toMy(work), toMy(money)]),
+          T("zodiacImgL2", [toMy(love), toMy(health)]),
+          T("zodiacImgL3", [toMy(luckyNum), luckyColor])
+        ], this);
       });
     }
     (function(){
@@ -892,7 +1055,7 @@
         var m = NUM_MEANINGS[k];
         var d = document.createElement("div");
         d.className = "stat";
-        d.innerHTML = '<div class="k">ဂဏန်း ' + toMy(k) + " — " + m.name + '</div><div class="v" style="font-size:16px;">' + m.theme + "</div>";
+        d.innerHTML = '<div class="k">' + T("numGridLabel", [toMy(k), m.name]) + '</div><div class="v" style="font-size:16px;">' + m.theme + "</div>";
         grid.appendChild(d);
       });
     })();
@@ -902,7 +1065,7 @@
       var box = el("nameResult");
       box.classList.remove("hidden");
       if (!raw){
-        box.innerHTML = "<p>နာမည် အရင် ထည့်ပါ။</p>";
+        box.innerHTML = "<p>" + T("nameFirst") + "</p>";
         return;
       }
       var total = 0, counted = [], skipped = [];
@@ -912,7 +1075,7 @@
         else if (ch >= "\u1000" && ch <= "\u1021"){ skipped.push(ch); } /* base letter with no assigned value */
       }
       if (total === 0){
-        box.innerHTML = "<p>မြန်မာ အက္ခရာ အခြေခံ စာလုံးတွေ မတွေ့ရပါ။ မြန်မာလို နာမည်အပြည့် ရေးထည့်ပါ (ဥပမာ — မောင်မောင်၊ မအေးအေး)။</p>";
+        box.innerHTML = "<p>" + T("noMyLetters") + "</p>";
         return;
       }
       var reduced = total;
@@ -925,16 +1088,19 @@
       box.innerHTML =
         '<div class="result-head">' +
           '<div class="animal-badge"><span class="glyph" style="font-size:38px;">' + toMy(reduced) + '</span><span class="cap">' + m.name + "</span></div>" +
-          "<div><h3>“" + esc(raw) + "” ရဲ့ ကံဂဏန်း — " + toMy(reduced) + "</h3>" +
+          "<div><h3>" + T("luckyNumberOf", [esc(raw), toMy(reduced)]) + "</h3>" +
           "<p>" + m.theme + "</p></div>" +
         "</div>" +
         '<div class="reading" style="margin-top:0;">' +
-          "<h4>တွက်ပုံ</h4><p>အက္ခရာ အလိုက် — " + counted.join("၊ ") + "<br/>စုစုပေါင်း — " + steps.map(toMy).join(" → ") + "</p>" +
-          "<h4>အဟော</h4><p>" + m.text + "</p>" +
-          (skipped.length ? "<p>တွက်ချက်ရာတွင် မပါဝင်သော စာလုံး — " + esc(skipped.join("၊ ")) + "</p>" : "") +
-        "</div>" + shareBtnHtml();
+          "<h4>" + T("howCalcH") + "</h4><p>" + T("byLetters") + counted.join("၊ ") + "<br/>" + T("totalLabel") + steps.map(toMy).join(" → ") + "</p>" +
+          "<h4>" + T("readingH") + "</h4><p>" + m.text + "</p>" +
+          (skipped.length ? "<p>" + T("notCounted") + esc(skipped.join("၊ ")) + "</p>" : "") +
+        "</div>" + shareBtnHtml() + imageShareBtnHtml();
       box.querySelector(".btn-share").addEventListener("click", function(){
-        shareText("“" + raw + "” ရဲ့ ကံဂဏန်း — " + toMy(reduced) + " (" + m.name + ")", this);
+        shareText(T("nameShare", [raw, toMy(reduced), m.name]), this);
+      });
+      box.querySelector(".btn-img").addEventListener("click", function(){
+        shareImageCard(T("luckyNumberOf", [raw, toMy(reduced)]), [m.name + " — " + m.theme], this);
       });
       box.scrollIntoView({ behavior: "smooth", block: "start" });
     });
@@ -959,28 +1125,31 @@
       box.innerHTML =
         '<div class="heart-wrap"><div class="heart-score">' + toMy(score) + '%</div><div class="heart-verdict">' + vd.t + '</div><div class="dt2">' + label + "</div></div>" +
         '<div class="vs-row">' +
-          '<div class="vs-box"><div class="glyph">' + e1.glyph + '</div><div class="nm">' + e1.name + "နေ့ဖွား</div>" +
-          '<div class="dt2">' + e1.animal + " ・ " + MAHABOTE[b1].name + "ဘုတ်</div></div>" +
+          '<div class="vs-box"><div class="glyph">' + e1.glyph + '</div><div class="nm">' + e1.name + T("born") + "</div>" +
+          '<div class="dt2">' + e1.animal + " ・ " + MAHABOTE[b1].name + T("boteSuffix") + "</div></div>" +
           '<div class="vs-mid">♥</div>' +
-          '<div class="vs-box"><div class="glyph">' + e2.glyph + '</div><div class="nm">' + e2.name + "နေ့ဖွား</div>" +
-          '<div class="dt2">' + e2.animal + " ・ " + MAHABOTE[b2].name + "ဘုတ်</div></div>" +
+          '<div class="vs-box"><div class="glyph">' + e2.glyph + '</div><div class="nm">' + e2.name + T("born") + "</div>" +
+          '<div class="dt2">' + e2.animal + " ・ " + MAHABOTE[b2].name + T("boteSuffix") + "</div></div>" +
         "</div>" +
-        '<div class="reading"><h4>အဟော</h4><p>' + vd.d + "</p>" +
-        "<p>" + e1.name + "နေ့ဖွားရဲ့ အားသာချက်က " + e1.strength + " ဖြစ်ပြီး၊ " + e2.name + "နေ့ဖွားရဲ့ အားသာချက်က " + e2.strength + " ဖြစ်ပါတယ်။ နှစ်ဦးရဲ့ အားသာချက်တွေ ပေါင်းစပ်နိုင်ရင် ဆက်ဆံရေး ပိုမို ခိုင်မာလာပါမယ်။</p></div>" + shareBtnHtml();
+        '<div class="reading"><h4>' + T("readingH") + "</h4><p>" + vd.d + "</p>" +
+        "<p>" + T("loveStrengths", [e1.name, e1.strength, e2.name, e2.strength]) + "</p></div>" + shareBtnHtml() + imageShareBtnHtml();
       box.querySelector(".btn-share").addEventListener("click", function(){
-        shareText(e1.name + "နေ့ဖွား နဲ့ " + e2.name + "နေ့ဖွား လိုက်ဖက်မှု — " + toMy(score) + "% (" + label + ")", this);
+        shareText(T("loveShare", [e1.name, e2.name, toMy(score), label]), this);
+      });
+      box.querySelector(".btn-img").addEventListener("click", function(){
+        shareImageCard(T("loveImgTitle", [e1.name, e2.name]), [T("compatLabel", [toMy(score)]), label], this);
       });
       box.scrollIntoView({ behavior: "smooth", block: "start" });
     });
     /* ================= Good-day checker ================= */
-    /* Moon phase: synodic month 29.530588853 d from new moon 2000-01-06 18:14 UTC.
-       Approximate (±1 day) — labelled as such in the UI. */
+    /* Moon phase fallback (only if MyanmarCal failed to load): synodic month
+       29.530588853 d from new moon 2000-01-06 18:14 UTC. Approximate (±1 day). */
     function moonPhase(d){
       var ref = Date.UTC(2000, 0, 6, 18, 14) / 864e5;
       var age = ((d.getTime() / 864e5 - ref) % 29.530588853 + 29.530588853) % 29.530588853;
       var day = Math.floor(age) + 1;
-      if (day <= 15) return { text: "လဆန်း " + toMy(day) + " ရက်", waxing: true, day: day };
-      return { text: "လဆုတ် " + toMy(day - 15) + " ရက်", waxing: false, day: day };
+      if (day <= 15) return { text: T("waxing") + toMy(day) + (window.BAYDIN_LANG === "en" ? "" : " ရက်"), waxing: true, day: day };
+      return { text: T("waning") + toMy(day - 15) + (window.BAYDIN_LANG === "en" ? "" : " ရက်"), waxing: false, day: day };
     }
     el("gooddayForm").addEventListener("submit", function(ev){
       ev.preventDefault();
@@ -992,31 +1161,244 @@
       var bi = DAYS.indexOf(be), ci = DAYS.indexOf(ce);
       var score = pairScore(bi, ci);
       var label = pairLabel(bi, ci);
-      var moon = moonPhase(cd);
+      var myd = (typeof MyanmarCal !== "undefined" && MyanmarCal.toMyanmar) ? MyanmarCal.toMyanmar(cd) : null;
+      var moon = myd ? { text: (window.BAYDIN_LANG === "en" ? myd.monthNameEn : myd.monthName) + " " + T(myd.moonPhase === "waxing" ? "waxing" : "waning") + toMy(myd.moonDay) + (window.BAYDIN_LANG === "en" ? "" : " ရက်") + (myd.isFullMoon ? T("fullMoon") : myd.isNewMoon ? T("newMoon") : "") } : moonPhase(cd);
+      var razaTxt = T("ordinaryDay"), razaNote = "";
+      if (myd && typeof AUSPICIOUS !== "undefined"){
+        var rDays = AUSPICIOUS.MONTH_RAZA[myd.monthIndex] || [];
+        var pDays = AUSPICIOUS.MONTH_PYATHADA[myd.monthIndex] || [];
+        var mName = window.BAYDIN_LANG === "en" ? myd.monthNameEn : myd.monthName;
+        if (pDays.indexOf(ci) !== -1){ razaTxt = T("pyathadaDay"); razaNote = T("pyathadaNote", [mName]); }
+        else if (rDays.indexOf(ci) !== -1){ razaTxt = T("razaDay"); razaNote = T("razaNote", [mName]); }
+      }
       var box = el("gooddayResult");
       box.classList.remove("hidden");
       box.innerHTML =
         '<div class="result-head">' +
           '<div class="animal-badge"><span class="glyph">' + ce.glyph + '</span><span class="cap">' + ce.animal + "</span></div>" +
-          "<div><h3>" + toMy(cd.getDate()) + " ရက် — " + ce.name + "နေ့</h3>" +
-          "<p>သင့် (" + be.name + "နေ့ဖွား) နဲ့ ဆက်နွယ်မှု — " + label + " ・ လိုက်ဖက်မှု " + toMy(score) + "%</p></div>" +
+          "<div><h3>" + T("gooddayTitle", [toMy(cd.getDate()), ce.name]) + "</h3>" +
+          "<p>" + T("gooddaySub", [be.name, label, toMy(score)]) + "</p></div>" +
         "</div>" +
         '<div class="stat-grid">' +
-          '<div class="stat"><div class="k">နေ့နံ / ဂြိုဟ်</div><div class="v">' + ce.name + " / " + ce.planet + "</div></div>" +
-          '<div class="stat"><div class="k">လ အခြေအနေ (ခန့်မှန်း)</div><div class="v">' + moon.text + "</div></div>" +
-          '<div class="stat"><div class="k">ကံကောင်း အရောင်</div><div class="v"><span class="swatch" style="background:' + ce.swatch + '"></span>' + ce.color + "</div></div>" +
-          '<div class="stat"><div class="k">ကံကောင်း ဂဏန်း</div><div class="v">' + toMy(ce.num) + "</div></div>" +
+          '<div class="stat"><div class="k">' + T("dayPlanetStat") + '</div><div class="v">' + ce.name + " / " + ce.planet + "</div></div>" +
+          '<div class="stat"><div class="k">' + T("meDateStat") + '</div><div class="v">' + (myd ? toMy(myd.myYear) + " " + moon.text : moon.text) + "</div></div>" +
+          '<div class="stat"><div class="k">' + T("razaPyathadaStat") + '</div><div class="v">' + razaTxt + "</div></div>" +
+          '<div class="stat"><div class="k">' + T("luckyColourStat") + '</div><div class="v"><span class="swatch" style="background:' + ce.swatch + '"></span>' + ce.color + "</div></div>" +
+          '<div class="stat"><div class="k">' + T("luckyNumberStat") + '</div><div class="v">' + toMy(ce.num) + "</div></div>" +
         "</div>" +
-        '<div class="reading"><h4>အဟော</h4><p>' +
-          (score >= 78 ? "ဒီရက်ဟာ သင့်အတွက် မိတ်ဖက် သဘော ပါတဲ့ ရက် ဖြစ်လို့ အရေးကြီး ကိစ္စတွေ (ခရီးထွက်တာ၊ စာချုပ် ချုပ်တာ၊ အလုပ်စတာ) လုပ်ဖို့ သင့်တော်ပါတယ်။"
-          : score >= 62 ? "ဒီရက်ဟာ သင့်အတွက် သာမန် ရက် ဖြစ်ပါတယ်။ အရေးကြီး ကိစ္စ လုပ်ရင် စာရွက်စာတမ်း သေချာ စစ်ပြီး စိတ်အေးအေး လုပ်ပါ။"
-          : "ဒီရက်ဟာ သင့်နေ့နံနဲ့ ရန်ဖက် သဘော ပါတဲ့ ရက် ဖြစ်လို့ အရေးကြီး ဆုံးဖြတ်ချက်တွေ၊ ရန်ဖြစ်နိုင်တဲ့ ဆွေးနွေးပွဲတွေကို တတ်နိုင်သမျှ ရှောင်ပါ။ ကုသိုလ် ကောင်းမှု လုပ်ရင် ပိုကောင်းပါတယ်။") +
-          "</p><p>လ အခြေအနေ (" + moon.text + ") က ခန့်မှန်းခြေ ဖြစ်လို့ တိကျတဲ့ မြန်မာ လပြက္ခဒိန်နဲ့ တိုက်စစ်ဖို့ လိုပါတယ်။</p></div>" + shareBtnHtml();
+        '<div class="reading"><h4>' + T("readingH") + "</h4><p>" +
+          (score >= 78 ? T("gdVerdictGood")
+          : score >= 62 ? T("gdVerdictMid")
+          : T("gdVerdictBad")) +
+          "</p>" + (razaNote ? "<p>" + razaNote + "</p>" : "") + (myd ? "<p>" + T("gooddayFootnote", [toMy(myd.myYear), moon.text]) + "</p>" : "<p>" + T("moonApprox", [moon.text]) + "</p>") + "</div>" + shareBtnHtml() + imageShareBtnHtml();
       box.querySelector(".btn-share").addEventListener("click", function(){
-        shareText(toMy(cd.getDate()) + " ရက် " + ce.name + "နေ့ (" + moon.text + ") — " + be.name + "နေ့ဖွားနဲ့ " + label + "၊ လိုက်ဖက်မှု " + toMy(score) + "%", this);
+        shareText(T("gooddayShare", [toMy(cd.getDate()), ce.name, moon.text, be.name, label, toMy(score)]), this);
+      });
+      box.querySelector(".btn-img").addEventListener("click", function(){
+        shareImageCard(T("gooddayTitle", [toMy(cd.getDate()), ce.name]), [moon.text, T("gooddayImgL2", [be.name, label, toMy(score)]), razaTxt], this);
       });
       box.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+
+    /* ================= Saved readings (localStorage) ================= */
+    function getSaved(){
+      try { return JSON.parse(localStorage.getItem("baydin_saved_v1") || "[]"); } catch(e){ return []; }
+    }
+    function saveReading(item){
+      var list = getSaved();
+      if (!list.some(function(x){ return x.date === item.date; })) list.unshift(item);
+      try { localStorage.setItem("baydin_saved_v1", JSON.stringify(list.slice(0, 20))); } catch(e){}
+      renderSaved();
+    }
+    function renderSaved(){
+      var box = el("savedList");
+      if (!box) return;
+      var list = getSaved();
+      if (!list.length){ box.innerHTML = "<p>" + T("nothingSaved") + "</p>"; return; }
+      box.innerHTML = list.map(function(it, i){
+        return '<div class="saved-row"><div><b>' + esc(it.label) + '</b><br/><span class="dt2">' + esc(it.date) + '</span></div>' +
+          '<div><button class="btn-share btn-mini" type="button" data-i="' + i + '" data-act="view">' + T("viewBtn") + '</button> ' +
+          '<button class="btn-share btn-mini" type="button" data-i="' + i + '" data-act="del">' + T("delBtn") + '</button></div></div>';
+      }).join("");
+      box.querySelectorAll("button").forEach(function(b){
+        b.addEventListener("click", function(){
+          var list2 = getSaved();
+          var it = list2[+b.getAttribute("data-i")];
+          if (!it) return;
+          if (b.getAttribute("data-act") === "del"){
+            list2.splice(+b.getAttribute("data-i"), 1);
+            try { localStorage.setItem("baydin_saved_v1", JSON.stringify(list2)); } catch(e){}
+            renderSaved();
+          } else {
+            el("birthDate").value = it.date;
+            switchTab("calc");
+            el("calcForm").dispatchEvent(new Event("submit", { cancelable: true }));
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
+        });
+      });
+    }
+    renderSaved();
+
+    /* ================= Name suggestion ================= */
+    el("suggestForm").addEventListener("submit", function(ev){
+      ev.preventDefault();
+      var v = el("suggestDate").value;
+      if (!v || typeof AUSPICIOUS === "undefined" || !AUSPICIOUS.NAME_GUIDE) return;
+      var p = v.split("-");
+      var d = new Date(+p[0], +p[1] - 1, +p[2]);
+      var idx = d.getDay();
+      var g = AUSPICIOUS.NAME_GUIDE[idx];
+      var dn = function(n){ return (window.BAYDIN_LANG === "en" && window.BAYDIN_DAY_EN) ? (window.BAYDIN_DAY_EN[n] || n) : n; };
+      var box = el("suggestResult");
+      box.classList.remove("hidden");
+      var extra = "";
+      if (idx === 3){
+        var rg = AUSPICIOUS.NAME_GUIDE[7];
+        extra = "<p>" + T("rahuExtra", [rg.lucky.join("၊ "), rg.avoid.join("၊ "), dn(rg.avoidDay)]) + "</p>";
+      }
+      box.innerHTML =
+        "<h4>" + T("suggestFor", [dn(g.day)]) + "</h4>" +
+        "<p>" + T("luckyLettersLabel") + "<b>" + g.lucky.join("၊ ") + "</b></p>" +
+        "<p>" + T("avoidLettersLabel") + g.avoid.join("၊ ") + T("avoidDaySuffix", [dn(g.avoidDay)]) + "</p>" +
+        "<p>" + T("suggestTip", [dn(g.day), g.lucky[0]]) + "</p>" + extra;
+      box.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    /* ================= Birth chart (ဇာတာ) ================= */
+    var CHART_GLYPHS = { Sun:"☉", Moon:"☽", Mercury:"☿", Venus:"♀", Mars:"♂", Jupiter:"♃", Saturn:"♄", Rahu:"☊", Ketu:"☋" };
+    var CHART_PLANET_MY = (window.BAYDIN_LANG === "en") ? { Sun:"Sun", Moon:"Moon", Mercury:"Mercury", Venus:"Venus", Mars:"Mars", Jupiter:"Jupiter", Saturn:"Saturn", Rahu:"Rahu", Ketu:"Ketu" } : { Sun:"နေ", Moon:"လ", Mercury:"ဗုဒ္ဓဟူး", Venus:"သောကြာ", Mars:"အင်္ဂါ", Jupiter:"ကြာသပတေး", Saturn:"စနေ", Rahu:"ရာဟု", Ketu:"ကိတ်" };
+    var CHART_ORDER = ["Sun","Moon","Mercury","Venus","Mars","Jupiter","Saturn","Rahu","Ketu"];
+    var chartLibsPromise = null;
+    function loadChartLibs(){
+      if (typeof window !== "undefined" && window.ChartCalc) return Promise.resolve();
+      if (chartLibsPromise) return chartLibsPromise;
+      chartLibsPromise = new Promise(function(resolve, reject){
+        function load(src){
+          return new Promise(function(res, rej){
+            var s = document.createElement("script");
+            s.src = src; s.onload = res; s.onerror = function(){ rej(new Error(src)); };
+            document.head.appendChild(s);
+          });
+        }
+        load("./astronomy.browser.js").then(function(){ return load("./chart.js"); }).then(resolve, reject);
+      });
+      return chartLibsPromise;
+    }
+    function chartWheelSVG(planets, ascLon){
+      var cx = 150, cy = 150, R = 132, rP = 98, rS = 118;
+      function pt(lon, r){
+        var a = (180 - lon) * Math.PI / 180;
+        return [cx + r * Math.cos(a), cy - r * Math.sin(a)];
+      }
+      var s = '<svg viewBox="0 0 300 300" style="width:100%;max-width:340px;display:block;margin:6px auto;">';
+      s += '<circle cx="150" cy="150" r="132" fill="none" stroke="#7c1d2e" stroke-width="2"/>';
+      s += '<circle cx="150" cy="150" r="78" fill="none" stroke="#c9a227" stroke-width="1"/>';
+      var i;
+      for (i = 0; i < 12; i++){
+        var a0 = (180 - i * 30) * Math.PI / 180;
+        s += '<line x1="' + (cx + 78 * Math.cos(a0)).toFixed(1) + '" y1="' + (cy - 78 * Math.sin(a0)).toFixed(1) +
+             '" x2="' + (cx + 132 * Math.cos(a0)).toFixed(1) + '" y2="' + (cy - 132 * Math.sin(a0)).toFixed(1) + '" stroke="#c9a227" stroke-width="0.7"/>';
+        var mid = pt(i * 30 + 15, rS);
+        s += '<text x="' + mid[0].toFixed(1) + '" y="' + (mid[1] + 4).toFixed(1) + '" text-anchor="middle" font-size="11" fill="#7c1d2e">' + ZODIAC[i].name + '</text>';
+      }
+      var sorted = planets.slice().sort(function(a, b){ return a.lon - b.lon; });
+      for (i = 0; i < sorted.length; i++){
+        var r = rP;
+        if (i > 0 && (sorted[i].lon - sorted[i - 1].lon) < 6) r = 82;
+        var q = pt(sorted[i].lon, r);
+        s += '<text x="' + q[0].toFixed(1) + '" y="' + (q[1] + 6).toFixed(1) + '" text-anchor="middle" font-size="17" fill="#7c1d2e">' + sorted[i].glyph + '</text>';
+      }
+      if (ascLon != null){
+        var t2 = pt(ascLon, 132), t3 = pt(ascLon, 141);
+        s += '<line x1="' + t2[0].toFixed(1) + '" y1="' + t2[1].toFixed(1) + '" x2="' + t3[0].toFixed(1) + '" y2="' + t3[1].toFixed(1) + '" stroke="#b8860b" stroke-width="2.5"/>';
+      }
+      s += '<text x="150" y="146" text-anchor="middle" font-size="15" fill="#7c1d2e">' + (ascLon != null ? chartSignName(ChartCalc.signOf(ascLon)) + T("ascendantWord") : T("chartWord")) + '</text>';
+      s += '<text x="150" y="166" text-anchor="middle" font-size="11" fill="#8a7a5a">' + T("planetPositions") + '</text>';
+      s += '</svg>';
+      return s;
+    }
+    el("chartPlace").addEventListener("change", function(){
+      var v = el("chartPlace").value;
+      if (v !== "custom") el("chartLatLon").value = v.replace(",", ", ");
+    });
+    el("chartForm").addEventListener("submit", function(ev){
+      ev.preventDefault();
+      var dv = el("chartDate").value;
+      if (!dv) return;
+      var box = el("chartResult");
+      box.classList.remove("hidden");
+      box.innerHTML = "<p>" + T("calculating") + "</p>";
+      var p = dv.split("-");
+      var y = +p[0], mo = +p[1], d = +p[2];
+      var hh = 12, mm = 0, hasTime = false;
+      if (el("chartTime").value){
+        var tp = el("chartTime").value.split(":");
+        hh = +tp[0]; mm = +tp[1]; hasTime = true;
+      }
+      var ll = el("chartLatLon").value.split(",");
+      var lat = parseFloat(ll[0]), lon = parseFloat(ll[1]);
+      if (isNaN(lat) || isNaN(lon)){ box.innerHTML = "<p>" + T("badLatLon") + "</p>"; return; }
+      loadChartLibs().then(function(){
+        var longs = ChartCalc.planetLongitudes(y, mo, d, hh, mm);
+        var ascLon = hasTime ? ChartCalc.ascendant(y, mo, d, hh, mm, lat, lon) : null;
+        var cusp1 = ascLon != null ? Math.floor(ascLon / 30) * 30 : 0;
+        function houseOf(lon){
+          if (ascLon == null) return null;
+          return Math.floor((((lon - cusp1) % 360) + 360) % 360 / 30) + 1;
+        }
+        var nak = ChartCalc.nakshatra(longs.Moon);
+        var dasha = ChartCalc.vimshottariDasha(longs.Moon, y, mo, d);
+        var planets = CHART_ORDER.map(function(k){
+          return { key: k, glyph: CHART_GLYPHS[k], name: CHART_PLANET_MY[k], lon: longs[k] };
+        });
+        var rows = planets.map(function(pl){
+          var sg = ChartCalc.signOf(pl.lon);
+          var h = houseOf(pl.lon);
+          return '<div class="saved-row"><div><b>' + pl.glyph + " " + pl.name + '</b></div><div>' + chartSignName(sg) + " " + toMy(Math.floor(sg.degree)) + "°" + (h ? T("houseSuffix", [toMy(h)]) : "") + "</div></div>";
+        }).join("");
+        var ascTxt = ascLon != null ? (function(){ var a = ChartCalc.signOf(ascLon); return chartSignName(a) + " " + toMy(Math.floor(a.degree)) + "°"; })() : T("noBirthTime");
+        var tr = "";
+        if (ascLon != null){
+          var t = ChartCalc.transitsToday(ascLon);
+          tr = '<h4>' + T("transitsTodayH") + "</h4><p>" + CHART_ORDER.map(function(k){
+            var sg = ChartCalc.signOf(t[k].longitude);
+            return T("transitLine", [CHART_PLANET_MY[k], chartSignName(sg), toMy(t[k].house)]);
+          }).join(" ・ ") + "</p>";
+        }
+        box.innerHTML =
+          '<div class="result-head">' +
+            '<div class="animal-badge"><span class="glyph">☉</span><span class="cap">လဂ်</span></div>' +
+            "<div><h3>" + T("chartTitle", [ascTxt]) + "</h3>" +
+            "<p>" + T("nakshatraLine", [(window.BAYDIN_LANG === "en" && window.BAYDIN_NAKSHATRA_EN) ? window.BAYDIN_NAKSHATRA_EN[nak.index] : nak.nameMy, CHART_PLANET_MY[nak.lord], chartSignName(ChartCalc.signOf(longs.Moon))]) + "</p></div>" +
+          "</div>" +
+          chartWheelSVG(planets, ascLon) +
+          '<div class="reading" style="margin-top:0;">' +
+            "<h4>" + T("planetPositions") + "</h4>" + rows +
+            "<h4>" + T("dashaH") + "</h4><p>" + T("dashaCurrent", [CHART_PLANET_MY[dasha.current.lord], toMy(dasha.current.start), toMy(dasha.current.end)]) + "</p>" +
+            "<p>" + T("dashaNext", [dasha.upcoming.map(function(u){ return CHART_PLANET_MY[u.lord] + " (" + toMy(u.start) + ")"; }).join("၊ ")]) + "</p>" +
+            tr +
+          "</div>" + shareBtnHtml() + imageShareBtnHtml();
+        box.querySelector(".btn-share").addEventListener("click", function(){
+          shareText(T("chartShare", [ascTxt, (window.BAYDIN_LANG === "en" && window.BAYDIN_NAKSHATRA_EN) ? window.BAYDIN_NAKSHATRA_EN[nak.index] : nak.nameMy, CHART_PLANET_MY[dasha.current.lord]]), this);
+        });
+        box.querySelector(".btn-img").addEventListener("click", function(){
+          shareImageCard(T("chartTitle", [ascTxt]), [T("chartImgL1", [(window.BAYDIN_LANG === "en" && window.BAYDIN_NAKSHATRA_EN) ? window.BAYDIN_NAKSHATRA_EN[nak.index] : nak.nameMy]), T("chartImgL2", [CHART_PLANET_MY[dasha.current.lord], toMy(dasha.current.start), toMy(dasha.current.end)])], this);
+        });
+        box.scrollIntoView({ behavior: "smooth", block: "start" });
+      }).catch(function(){
+        box.innerHTML = "<p>" + T("chartLibFail") + "</p>";
+      });
+    });
+
+    var langBtn = document.getElementById("langBtn");
+    if (langBtn){
+      langBtn.addEventListener("click", function(){
+        var next = (window.BAYDIN_LANG === "en") ? "my" : "en";
+        try { localStorage.setItem("baydin_lang", next); } catch(e){}
+        location.reload();
+      });
+    }
 
     /* ================= PWA: install ================= */
     if ("serviceWorker" in navigator) {
