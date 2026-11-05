@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="my">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>မြန်မာ ဗေဒင်</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&family=Noto+Serif+Myanmar:wght@600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root{
+        --bg:#faf4e8;
+        --bg2:#f3e9d5;
+        --surface:#fffdf7;
+        --surface2:#f8efdc;
+        --ink:#2b1a10;
+        --ink-soft:#5d4a38;
+        --ink-faint:#8a7460;
+        --line:#e3d3b4;
+        --maroon:#7c1d2e;
+        --maroon-deep:#5c1220;
+        --maroon-soft:#f6e3e0;
+        --gold:#b8860b;
+        --gold-bright:#c9a227;
+        --gold-soft:#f3e5bd;
+        --good:#2e7d46;
+        --shadow:0 10px 30px rgba(92,18,32,.10);
+        --radius:18px;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --bg:#16100b;
+          --bg2:#1e150e;
+          --surface:#241a11;
+          --surface2:#2c2013;
+          --ink:#f2e7d3;
+          --ink-soft:#cdb894;
+          --ink-faint:#9a8668;
+          --line:#3d2d1a;
+          --maroon:#d4778a;
+          --maroon-deep:#e59bab;
+          --maroon-soft:#3a1d24;
+          --gold:#d4af5a;
+          --gold-bright:#e3c878;
+          --gold-soft:#3a2f14;
+          --good:#7fc98f;
+          --shadow:0 10px 30px rgba(0,0,0,.45);
+        }
+      }
+      *{box-sizing:border-box;}
+      html{scroll-behavior:smooth;}
+      body{
+        margin:0;
+        font-family:"Padauk","Noto Sans Myanmar",sans-serif;
+        background:
+          radial-gradient(900px 480px at 85% -80px, var(--gold-soft), transparent 60%),
+          linear-gradient(180deg, var(--bg), var(--bg2));
+        color:var(--ink);
+        line-height:1.75;
+        -webkit-font-smoothing:antialiased;
+      }
+      h1,h2,h3,.serif{font-family:"Noto Serif Myanmar","Padauk",serif;}
+      button{font-family:inherit;}
+      input,select{font-family:inherit;}
+      .wrap{max-width:1060px;margin:0 auto;padding:0 16px 96px;}
+
+      /* ---------- Hero ---------- */
+      .hero{padding:34px 0 8px;text-align:center;}
+      .hero .motif{display:flex;justify-content:center;margin-bottom:6px;color:var(--gold);}
+      .hero h1{font-size:clamp(30px,6vw,44px);margin:0 0 4px;color:var(--maroon-deep);letter-spacing:.5px;}
+      .hero p{margin:0 auto;max-width:560px;color:var(--ink-soft);font-size:16px;}
+      .hero .today-line{margin-top:12px;display:inline-flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+      .chip{
+        display:inline-flex;align-items:center;gap:6px;
+        background:var(--surface);border:1px solid var(--line);
+        border-radius:999px;padding:5px 14px;font-size:14px;color:var(--ink-soft);
+        box-shadow:0 2px 8px rgba(92,18,32,.05);
+      }
+      .chip b{color:var(--maroon);font-weight:700;}
+
+      /* ---------- Tabs ---------- */
+      .tabs{
+        position:sticky;top:0;z-index:30;
+        display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
+        padding:12px 2px;margin-top:18px;
+        background:linear-gradient(180deg, var(--bg) 78%, transparent);
+      }
+      .tabs::-webkit-scrollbar{display:none;}
+      .tab-btn{
+        flex:1 0 auto;border:1px solid var(--line);background:var(--surface);
+        color:var(--ink-soft);border-radius:999px;padding:9px 18px;
+        font-size:15.5px;font-weight:700;cursor:pointer;white-space:nowrap;
+        transition:all .18s ease;
+      }
+      .tab-btn:hover{border-color:var(--gold);}
+      .tab-btn.active{
+        background:linear-gradient(135deg, var(--maroon), var(--maroon-deep));
+        color:#fdf6e3;border-color:transparent;
+        box-shadow:0 6px 16px rgba(92,18,32,.28);
+      }
+      @media (prefers-color-scheme: dark){
+        .tab-btn.active{color:#241a11;background:linear-gradient(135deg, var(--gold-bright), var(--gold));}
+      }
+      @media (max-width:640px){
+        .tabs{display:grid;grid-template-columns:1fr 1fr;overflow:visible;}
+        .tab-btn{white-space:normal;text-align:center;padding:10px 8px;}
+      }
+      .panel{display:none;animation:fade .3s ease;}
+      .panel.active{display:block;}
+      @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+      @media (prefers-reduced-motion: reduce){
+        .panel{animation:none;} html{scroll-behavior:auto;}
+      }
+
+      /* ---------- Cards & forms ---------- */
+      .card{
+        background:var(--surface);border:1px solid var(--line);
+        border-radius:var(--radius);box-shadow:var(--shadow);
+        padding:22px;margin-top:18px;
+      }
+      .card h2{margin:0 0 4px;font-size:22px;color:var(--maroon-deep);}
+      .card .sub{color:var(--ink-soft);margin:0 0 16px;font-size:15px;}
+      .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+      .form-grid .full{grid-column:1/-1;}
+      @media (max-width:560px){.form-grid{grid-template-columns:1fr;}}
+      label.lbl{display:block;font-size:14px;font-weight:700;color:var(--ink-soft);margin-bottom:6px;}
+      input[type="date"],input[type="time"],input[type="text"],select{
+        width:100%;padding:12px 14px;font-size:16.5px;color:var(--ink);
+        background:var(--surface2);border:1.5px solid var(--line);border-radius:12px;
+        outline:none;transition:border-color .15s ease;
+      }
+      input:focus,select:focus{border-color:var(--gold);}
+      .btn{
+        display:inline-flex;align-items:center;justify-content:center;gap:8px;
+        width:100%;padding:14px 20px;margin-top:18px;
+        background:linear-gradient(135deg, var(--maroon), var(--maroon-deep));
+        color:#fdf6e3;border:none;border-radius:14px;
+        font-size:17px;font-weight:700;cursor:pointer;
+        box-shadow:0 8px 20px rgba(92,18,32,.25);
+        transition:transform .15s ease, box-shadow .15s ease;
+      }
+      .btn:hover{transform:translateY(-1px);box-shadow:0 12px 24px rgba(92,18,32,.3);}
+      .btn:active{transform:translateY(0);}
+      @media (prefers-color-scheme: dark){
+        .btn{background:linear-gradient(135deg, var(--gold-bright), var(--gold));color:#241a11;}
+      }
+      .hint{font-size:13.5px;color:var(--ink-faint);margin-top:10px;}
+
+      /* ---------- Result ---------- */
+      .result-head{
+        display:flex;gap:18px;align-items:center;flex-wrap:wrap;
+        padding-bottom:16px;border-bottom:1px dashed var(--line);margin-bottom:16px;
+      }
+      .animal-badge{
+        width:92px;height:92px;flex:0 0 auto;border-radius:50%;
+        display:flex;flex-direction:column;align-items:center;justify-content:center;
+        background:radial-gradient(circle at 50% 32%, var(--gold-soft), var(--surface2));
+        border:2px solid var(--gold-bright);color:var(--maroon-deep);
+      }
+      .animal-badge .glyph{font-size:40px;line-height:1.1;}
+      .animal-badge .cap{font-size:11.5px;font-weight:700;color:var(--ink-soft);}
+      .result-head h3{margin:0;font-size:24px;color:var(--maroon-deep);}
+      .result-head p{margin:2px 0 0;color:var(--ink-soft);font-size:15px;}
+      .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;}
+      .stat{
+        background:var(--surface2);border:1px solid var(--line);border-radius:14px;
+        padding:13px 15px;
+      }
+      .stat .k{font-size:13px;color:var(--ink-faint);font-weight:700;letter-spacing:.2px;}
+      .stat .v{font-size:18.5px;font-weight:700;color:var(--ink);margin-top:1px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+      .swatch{width:22px;height:22px;border-radius:7px;border:1px solid rgba(0,0,0,.18);flex:0 0 auto;}
+      .reading{margin-top:16px;}
+      .reading h4{margin:16px 0 4px;font-size:17px;color:var(--maroon);}
+      .reading p{margin:0;color:var(--ink-soft);font-size:15.5px;}
+      .stars{color:var(--gold);font-size:18px;letter-spacing:3px;}
+      .stars .off{color:var(--line);}
+
+      /* Mahabote diagram */
+      .bote-diagram{
+        display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+        max-width:420px;margin:14px auto 4px;
+      }
+      .bote-cell{
+        border:1.5px solid var(--line);border-radius:12px;padding:10px 6px;text-align:center;
+        background:var(--surface2);font-size:14.5px;color:var(--ink-soft);min-height:64px;
+        display:flex;flex-direction:column;justify-content:center;gap:1px;
+      }
+      .bote-cell small{font-size:12px;color:var(--ink-faint);}
+      .bote-cell.hit{
+        background:linear-gradient(150deg, var(--maroon), var(--maroon-deep));color:#fdf6e3;
+        border-color:transparent;box-shadow:0 8px 18px rgba(92,18,32,.3);font-weight:700;
+      }
+      .bote-cell.hit small{color:#f0d9a8;}
+      .bote-center{
+        display:flex;align-items:center;justify-content:center;color:var(--gold);
+        font-size:22px;
+      }
+
+      /* ---------- Zodiac ---------- */
+      .zodiac-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px;}
+      .z-card{
+        border:1.5px solid var(--line);background:var(--surface);border-radius:14px;
+        padding:13px 8px 11px;text-align:center;cursor:pointer;color:var(--ink);
+        transition:all .16s ease;
+      }
+      .z-card:hover{border-color:var(--gold);transform:translateY(-2px);}
+      .z-card.active{border-color:var(--maroon);background:var(--maroon-soft);box-shadow:var(--shadow);}
+      .z-card .glyph{font-size:30px;line-height:1.15;color:var(--maroon);}
+      .z-card .nm{font-weight:700;font-size:15.5px;}
+      .z-card .dt{font-size:12px;color:var(--ink-faint);}
+      .meter-row{display:grid;grid-template-columns:86px 1fr 44px;gap:10px;align-items:center;margin:7px 0;font-size:14.5px;}
+      .meter{height:9px;border-radius:99px;background:var(--surface2);border:1px solid var(--line);overflow:hidden;}
+      .meter i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg, var(--gold), var(--maroon));}
+      .meter-row .pct{font-weight:700;color:var(--maroon);text-align:right;}
+
+      /* ---------- Compatibility ---------- */
+      .heart-wrap{text-align:center;padding:6px 0 2px;}
+      .heart-score{
+        font-family:"Noto Serif Myanmar",serif;font-size:56px;font-weight:800;color:var(--maroon);line-height:1.1;
+      }
+      .heart-verdict{font-size:19px;font-weight:700;color:var(--maroon-deep);}
+      .vs-row{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin-top:14px;}
+      @media (max-width:560px){.vs-row{grid-template-columns:1fr;}}
+      .vs-box{background:var(--surface2);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;}
+      .vs-box .glyph{font-size:34px;}
+      .vs-box .nm{font-weight:700;font-size:17px;}
+      .vs-box .dt2{font-size:13.5px;color:var(--ink-faint);}
+      .vs-mid{display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--maroon);}
+
+      footer{
+        margin-top:34px;padding:20px 4px 0;border-top:1px solid var(--line);
+        color:var(--ink-faint);font-size:13.5px;text-align:center;
+      }
+      .hidden{display:none !important;}
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+
+      <!-- ================= HERO ================= -->
+      <header class="hero">
+        <div class="motif" aria-hidden="true">
+          <svg width="54" height="34" viewBox="0 0 54 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M27 30 C27 22 27 14 27 6"/>
+            <path d="M27 20 C21 20 15 16 13 9 C20 10 25 14 27 20 Z" fill="currentColor" stroke="none" opacity=".85"/>
+            <path d="M27 20 C33 20 39 16 41 9 C34 10 29 14 27 20 Z" fill="currentColor" stroke="none" opacity=".85"/>
+            <path d="M27 27 C20 27 13 24 9 17 C17 17 24 21 27 27 Z" fill="currentColor" stroke="none" opacity=".55"/>
+            <path d="M27 27 C34 27 41 24 45 17 C37 17 30 21 27 27 Z" fill="currentColor" stroke="none" opacity=".55"/>
+            <circle cx="27" cy="4" r="2.2" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+        <h1>မြန်မာ ဗေဒင်</h1>
+        <p>မွေးနေ့ ထည့်ရုံနဲ့ မဟာဘုတ်၊ နေ့နံ၊ ကံကောင်းအရောင်・ဂဏန်း・ကျောက်၊ ရာသီခွင် ဟောစာတမ်း အစုံအလင် တွက်ချက်ပေးပါတယ်။</p>
+        <div class="today-line">
+          <span class="chip">ယနေ့ <b id="todayDow">—</b></span>
+          <span class="chip">ရက်စွဲ <b id="todayDate">—</b></span>
+          <span class="chip">မြန်မာနှစ် <b id="todayMyYear">—</b></span>
+        </div>
+      </header>
+
+      <!-- ================= TABS ================= -->
+      <nav class="tabs" role="tablist" aria-label="ဗေဒင် အမျိုးအစားများ">
+        <button class="tab-btn active" data-tab="calc" role="tab">မဟာဘုတ် တွက်ရန်</button>
+        <button class="tab-btn" data-tab="zodiac" role="tab">ရာသီခွင် ဟောစာတမ်း</button>
+        <button class="tab-btn" data-tab="name" role="tab">နာမည် ဂဏန်းဗေဒင်</button>
+        <button class="tab-btn" data-tab="love" role="tab">လိုက်ဖက်မှု စစ်ရန်</button>
+      </nav>
+
+      <!-- ================= PANEL: CALCULATOR ================= -->
+      <section class="panel active" id="panel-calc">
+        <div class="card">
+          <h2>မွေးနေ့ ထည့်ပြီး တွက်ပါ</h2>
+          <p class="sub">သင့်ရဲ့ မွေးသက္ကရာဇ် (အင်္ဂလိပ်ရက်စွဲ) ကို ထည့်ပါ။ မွေးချိန် သိရင် ထည့်ပေးပါ — ဗုဒ္ဓဟူးနေ့ဖွားတွေအတွက် မွန်းတည့် / မွန်းလွယ် (ရာဟု) ခွဲခြားပေးပါတယ်။</p>
+          <form id="calcForm">
+            <div class="form-grid">
+              <div>
+                <label class="lbl" for="birthDate">မွေးနေ့</label>
+                <input type="date" id="birthDate" required />
+              </div>
+              <div>
+                <label class="lbl" for="birthTime">မွေးချိန် (သိရင် ထည့်ပါ)</label>
+                <input type="time" id="birthTime" />
+              </div>
+            </div>
+            <button class="btn" type="submit">ဟောစာတမ်း တွက်ပေးပါ</button>
+            <p class="hint">မြန်မာနှစ်ကို သင်္ကြန် (ဧပြီ ၁၇ ရက် ဝန်းကျင်) ကို နှစ်ကူး အဖြစ် အနီးစပ်ဆုံး တွက်ချက်ထားပါတယ်။</p>
+          </form>
+        </div>
+
+        <div class="card hidden" id="calcResult" aria-live="polite"></div>
+
+        <div class="card">
+          <h2>နေ့နံ ၈ ပါး အကြောင်း</h2>
+          <p class="sub">မြန်မာ ရိုးရာ ဗေဒင်မှာ မွေးနေ့ အလိုက် ဂြိုဟ်နဲ့ တိရစ္ဆာန် သင်္ကေတ သတ်မှတ်ထားပါတယ်။ ကိုယ့်နေ့နံကို နှိပ်ပြီး အကျဉ်း ဖတ်နိုင်ပါတယ်။</p>
+          <div class="zodiac-grid" id="dayGrid"></div>
+          <div class="reading hidden" id="dayDetail"></div>
+        </div>
+      </section>
+
+      <!-- ================= PANEL: ZODIAC ================= -->
+      <section class="panel" id="panel-zodiac">
+        <div class="card">
+          <h2>ရာသီခွင် ၁၂ ခု</h2>
+          <p class="sub">သင့်ရာသီခွင်ကို ရွေးပါ — ဒီနေ့ (<span id="zodiacToday"></span>) အတွက် ဟောစာတမ်း ဖတ်ရပါမယ်။ မွေးနေ့ ထည့်ထားရင် သင့်ရာသီခွင်ကို အလိုအလျောက် ရွေးပေးထားပါတယ်။</p>
+          <div class="zodiac-grid" id="zodiacGrid"></div>
+        </div>
+        <div class="card hidden" id="zodiacResult" aria-live="polite"></div>
+      </section>
+
+      <!-- ================= PANEL: NAME NUMEROLOGY ================= -->
+      <section class="panel" id="panel-name">
+        <div class="card">
+          <h2>နာမည် ဂဏန်းဗေဒင်</h2>
+          <p class="sub">မြန်မာ အက္ခရာတွေကို နေ့နံ အလိုက် သတ်မှတ်ထားတဲ့ ဂဏန်းတွေနဲ့ တွက်ပြီး နာမည်ရဲ့ စုစုပေါင်း ကံဂဏန်း ကို ဖော်ပြပေးပါတယ်။ မြန်မာ နာမည် အပြည့်အစုံ ထည့်ပါ။</p>
+          <form id="nameForm">
+            <label class="lbl" for="nameInput">သင့်နာမည် (မြန်မာလို)</label>
+            <input type="text" id="nameInput" placeholder="ဥပမာ — မောင်မောင်" autocomplete="off" />
+            <button class="btn" type="submit">နာမည် ကံဂဏန်း တွက်ပါ</button>
+            <p class="hint">အက္ခရာ ခွဲခြမ်းပုံ — အ(၁)၊ က(၂)၊ စ(၃)၊ ဋ・တ(၄)၊ ပ(၅)၊ သ(၆)၊ … စတဲ့ ရိုးရာ နေ့နံ အက္ခရာ အုပ်စုများနဲ့ တွက်ပါတယ်။</p>
+          </form>
+        </div>
+        <div class="card hidden" id="nameResult" aria-live="polite"></div>
+
+        <div class="card">
+          <h2>ကံဂဏန်း ၁ မှ ၉ အဓိပ္ပာယ်</h2>
+          <p class="sub">ဂဏန်း တစ်ခုချင်းစီရဲ့ သဘောသဘာဝ အကျဉ်း။</p>
+          <div class="stat-grid" id="numGrid"></div>
+        </div>
+      </section>
+
+      <!-- ================= PANEL: COMPATIBILITY ================= -->
+      <section class="panel" id="panel-love">
+        <div class="card">
+          <h2>နှစ်ဦး လိုက်ဖက်မှု စစ်ပါ</h2>
+          <p class="sub">နှစ်ယောက်ရဲ့ မွေးနေ့တွေကို ထည့်ပါ။ နေ့နံ မိတ် / ရန် ဆက်နွယ်မှုနဲ့ မဟာဘုတ် အနေအထားကို ကြည့်ပြီး လိုက်ဖက်မှု ရာခိုင်နှုန်း တွက်ပေးပါတယ်။</p>
+          <form id="loveForm">
+            <div class="form-grid">
+              <div>
+                <label class="lbl" for="loveDate1">ပထမလူ မွေးနေ့</label>
+                <input type="date" id="loveDate1" required />
+              </div>
+              <div>
+                <label class="lbl" for="loveDate2">ဒုတိယလူ မွေးနေ့</label>
+                <input type="date" id="loveDate2" required />
+              </div>
+            </div>
+            <button class="btn" type="submit">လိုက်ဖက်မှု စစ်ပါ</button>
+          </form>
+        </div>
+        <div class="card hidden" id="loveResult" aria-live="polite"></div>
+      </section>
+
+      <footer>
+        <p>ဤဟောစာတမ်းများသည် မြန်မာ ရိုးရာ ဗေဒင် အယူအဆ အပေါ် အခြေခံပြီး ဖျော်ဖြေရေးနှင့် အထွေထွေ သိမှတ်ဖွယ် အတွက်သာ ဖြစ်ပါတယ်။ ဘဝ အဆုံးအဖြတ် ကြီးကြီးမားမားတွေကို ကိုယ်ပိုင် အသိဉာဏ်နဲ့ ဆုံးဖြတ်ပါ။</p>
+      </footer>
+    </div>
+
+    <script>
+    "use strict";
+    /* ================= Helpers ================= */
+    var MY_DIGITS = ["၀","၁","၂","၃","၄","၅","၆","၇","၈","၉"];
+    function toMy(n){ return String(n).replace(/[0-9]/g, function(d){ return MY_DIGITS[+d]; }); }
+    function el(id){ return document.getElementById(id); }
+    function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+    function dayOfYear(d){
+      var start = new Date(d.getFullYear(),0,0);
+      return Math.floor((d - start) / 864e5);
+    }
+    function seededPick(arr, seed){
+      var x = Math.sin(seed * 9973 + 12345) * 10000;
+      var r = x - Math.floor(x);
+      return arr[Math.floor(r * arr.length)];
+    }
+    function seededRange(seed, min, max){
+      var x = Math.sin(seed * 7919 + 555) * 10000;
+      var r = x - Math.floor(x);
+      return min + Math.floor(r * (max - min + 1));
+    }
+    /* Myanmar year: Thingyan ~ Apr 17 as new-year boundary (approximation) */
+    function myanmarYear(d){
+      var y = d.getFullYear();
+      var afterThingyan = (d.getMonth() > 3) || (d.getMonth() === 3 && d.getDate() >= 17);
+      return afterThingyan ? y - 638 : y - 639;
+    }
+    function ageOf(d){
+      var now = new Date();
+      var a = now.getFullYear() - d.getFullYear();
+      var m = now.getMonth() - d.getMonth();
+      if (m < 0 || (m === 0 && now.getDate() < d.getDate())) a--;
+      return a;
+    }
+
+    /* ================= Day (နေ့နံ) data ================= */
+    /* index 0..6 = Sun..Sat (JS getDay), 7 = Rahu (Wed afternoon) */
+    var DAYS = [
+      { name:"တနင်္ဂနွေ", en:"Sunday", planet:"နေ", animal:"ဂဠုန်", glyph:"🦅",
+        color:"အနီ နှင့် ရွှေဝါ", swatch:"#c8372d", num:1, gem:"ပတ္တမြား", dir:"အရှေ့မြောက်",
+        trait:"တနင်္ဂနွေဖွားတွေဟာ ခေါင်းဆောင်စိတ် ရှိပြီး ကိုယ့်ကိုယ်ကို ယုံကြည်မှု မြင့်မားသူတွေ ဖြစ်ပါတယ်။ စတင်လုပ်ဆောင်ရတာကို နှစ်သက်ပြီး သူများရဲ့ အမိန့်အောက်မှာ နေရတာကို မကြိုက်တတ်ပါ။ ဂုဏ်သိက္ခာကို အလေးထားပြီး ရည်မှန်းချက် ကြီးမားပါတယ်။",
+        strength:"ခေါင်းဆောင်နိုင်မှု၊ သတ္တိ၊ ဆုံးဖြတ်ချက် မြန်ဆန်မှု",
+        caution:"မာန ကြီးလွန်းတာ၊ စိတ်တိုလွယ်တာကို ထိန်းပါ။" },
+      { name:"တနင်္လာ", en:"Monday", planet:"လ", animal:"ကျား", glyph:"🐅",
+        color:"အဖြူ နှင့် ငွေရောင်", swatch:"#e8e4da", num:2, gem:"ပုလဲ", dir:"အရှေ့",
+        trait:"တနင်္လာဖွားတွေဟာ စိတ်ထားနူးညံ့ပြီး သူများကို ကူညီတတ်သူတွေ ဖြစ်ပါတယ်။ အတွေးအခေါ် နက်နဲပြီး မိသားစုကို ချစ်ခင် တွယ်တာပါတယ်။ စကားပြော ချိုသာပြီး လူချစ်လူခင် များပါတယ်။",
+        strength:"စာနာစိတ်၊ စိတ်ရှည်မှု၊ လူမှုဆက်ဆံရေး ကောင်းမွန်မှု",
+        caution:"စိတ်လှုပ်ရှား လွယ်တာ၊ ဆုံးဖြတ်ချက် တွေဝေတာကို သတိထားပါ။" },
+      { name:"အင်္ဂါ", en:"Tuesday", planet:"အင်္ဂါ", animal:"ခြင်္သေ့", glyph:"🦁",
+        color:"အနီ", swatch:"#d43a2a", num:3, gem:"သန္တာ", dir:"အရှေ့တောင်",
+        trait:"အင်္ဂါဖွားတွေဟာ သတ္တိရှိပြီး တက်ကြွ သွက်လက်သူတွေ ဖြစ်ပါတယ်။ ပြိုင်ဆိုင်မှုကို နှစ်သက်ပြီး အလုပ်ကို အားကြိုးမာန်တက် လုပ်တတ်ပါတယ်။ ရိုးသား ပွင့်လင်းပေမယ့် စိတ်မြန်တတ်ပါတယ်။",
+        strength:"ခွန်အား၊ လုပ်ဆောင်နိုင်စွမ်း၊ ရဲရင့်မှု",
+        caution:"စိတ်တိုပြီး စကားကြမ်းတာ၊ အန္တရာယ် မှန်းမသိ ဝင်တိုးတာကို ရှောင်ပါ။" },
+      { name:"ဗုဒ္ဓဟူး", en:"Wednesday", planet:"ဗုဒ္ဓဟူး", animal:"ဆင်", glyph:"🐘",
+        color:"အစိမ်း", swatch:"#3d9970", num:4, gem:"မြ", dir:"တောင်",
+        trait:"ဗုဒ္ဓဟူးဖွားတွေဟာ ဉာဏ်ကောင်းပြီး စကားပြော ကျွမ်းကျင် သူတွေ ဖြစ်ပါတယ်။ စီးပွားရေး အမြင် ရှိပြီး လိုက်လျောညီထွေ နေတတ်ပါတယ်။ သင်ယူမှု မြန်ဆန်ပြီး အလုပ်မျိုးစုံ လုပ်နိုင်စွမ်း ရှိပါတယ်။",
+        strength:"ဉာဏ်ရည်၊ စကားပြော စွမ်းရည်၊ စီးပွားရေး အမြင်",
+        caution:"အလုပ် တစ်ခု မပြီးခင် နောက်တစ်ခု ပြောင်းတာကို သတိထားပါ။" },
+      { name:"ကြာသပတေး", en:"Thursday", planet:"ကြာသပတေး", animal:"ကြွက်", glyph:"🐀",
+        color:"အဝါ", swatch:"#e6b93d", num:5, gem:"ဥဿဖယား", dir:"အနောက်",
+        trait:"ကြာသပတေးဖွားတွေဟာ ပညာကို ချစ်ခင်ပြီး အသိပညာ မျှဝေချင်စိတ် ရှိသူတွေ ဖြစ်ပါတယ်။ တရား မျှတမှုကို လိုလားပြီး ဆရာ၊ လူကြီး ဖြစ်လာတတ်ပါတယ်။ စိတ်ရှည် လက်ရှည် နဲ့ အနာဂတ်ကို စီမံတတ်ပါတယ်။",
+        strength:"ပညာဉာဏ်၊ မျှတမှု၊ စီမံခန့်ခွဲနိုင်မှု",
+        caution:"ကိုယ့်အယူအဆ တစ်ခုတည်းကို ဆုပ်ကိုင်လွန်းတာကို လျှော့ပါ။" },
+      { name:"သောကြာ", en:"Friday", planet:"သောကြာ", animal:"ပူး", glyph:"🐹",
+        color:"ပန်းရောင် နှင့် အပြာနု", swatch:"#e79fb8", num:6, gem:"စိန်", dir:"မြောက်",
+        trait:"သောကြာဖွားတွေဟာ အလှအပနဲ့ အနုပညာကို ခံစားတတ်ပြီး စိတ်ထား နူးညံ့ သိမ်မွေ့သူတွေ ဖြစ်ပါတယ်။ အချစ်ရေးမှာ စိတ်ရင်း ကောင်းပြီး လူမှုရေး လိမ္မာပါတယ်။ ပျော်ရွှင်မှုကို မျှဝေတတ်ပါတယ်။",
+        strength:"အနုပညာ ခံစားမှု၊ စိတ်ထားကောင်းမှု၊ လူကြိုက်များမှု",
+        caution:"သုံးဖြုန်း လွယ်တာ၊ အပျော်အပါး လွန်ကဲတာကို ထိန်းပါ။" },
+      { name:"စနေ", en:"Saturday", planet:"စနေ", animal:"နဂါး", glyph:"🐉",
+        color:"အနက် နှင့် ခရမ်း", swatch:"#4a3b5c", num:7, gem:"နီလာ", dir:"အနောက်တောင်",
+        trait:"စနေဖွားတွေဟာ ဇွဲကောင်းပြီး တာဝန်ယူစိတ် ပြင်းထန်သူတွေ ဖြစ်ပါတယ်။ အလုပ် ကြိုးစား လုပ်ကိုင်ပြီး ရေရှည် အောင်မြင်မှု ရတတ်ပါတယ်။ စကား နည်းပေမယ့် လက်တွေ့ ကျပြီး ယုံကြည်ရသူတွေ ဖြစ်ပါတယ်။",
+        strength:"ဇွဲ၊ တာဝန်ယူမှု၊ ရေရှည် တည်တံ့မှု",
+        caution:"စိတ်ဓာတ် ကျလွယ်တာ၊ တစ်ကိုယ်တည်း နေလွန်းတာကို သတိထားပါ။" },
+      { name:"ရာဟု", en:"Wednesday (afternoon)", planet:"ရာဟု", animal:"ဆင် (အစွယ်မဲ့)", glyph:"🐘",
+        color:"မီးခိုး နှင့် အညို", swatch:"#8a7a5f", num:8, gem:"ဂေါ်မုတ်", dir:"အနောက်မြောက်",
+        trait:"ဗုဒ္ဓဟူး မွန်းလွယ် (ရာဟု) ဖွားတွေဟာ စိတ်ကူး ကြွယ်ဝပြီး ပုံမှန် မဟုတ်တဲ့ လမ်းကြောင်းကနေ အောင်မြင်တတ်သူတွေ ဖြစ်ပါတယ်။ ပြောင်းလဲမှုကို မကြောက်ဘဲ အခွင့်အလမ်းကို ရှာဖွေ တတ်ပါတယ်။ လျှို့ဝှက်ချက်ကို ထိန်းသိမ်းနိုင်စွမ်း ရှိပါတယ်။",
+        strength:"စိတ်ကူး ဆန်းသစ်မှု၊ လိုက်လျောညီထွေမှု၊ အခွင့်အလမ်း အမြင်",
+        caution:"ဆုံးဖြတ်ချက် အပြောင်းအလဲ မြန်လွန်းတာကို ထိန်းပါ။" }
+    ];
+    function dayEntity(date, timeStr){
+      var dow = date.getDay();
+      if (dow === 3 && timeStr){
+        var parts = timeStr.split(":");
+        var mins = (+parts[0]) * 60 + (+parts[1] || 0);
+        if (mins >= 12 * 60) return DAYS[7];
+      }
+      return DAYS[dow];
+    }
+
+    /* ================= Mahabote (မဟာဘုတ်) ================= */
+    var MAHABOTE = {
+      0:{ name:"ဘင်္ဂ", tag:"အခြေခံ အုတ်မြစ်",
+        meaning:"ဘင်္ဂဘုတ်ဖွားဟာ ဘဝရဲ့ အခြေခံကို ခိုင်မာအောင် တည်ဆောက်ရသူတွေ ဖြစ်ပါတယ်။ အစပိုင်းမှာ နှေးကွေး ခက်ခဲတတ်ပေမယ့် အုတ်မြစ် ခိုင်လာတာနဲ့အမျှ တည်တံ့ ခိုင်မြဲတဲ့ အောင်မြင်မှု ရလာပါမယ်။ အိမ်ထောင်ရေး၊ အိုးအိမ် တည်ထောင်ရေးမှာ ကံကောင်းတတ်ပါတယ်။",
+        advice:"အစပိုင်း အခက်အခဲကို စိတ်မပျက်ဘဲ အုတ်မြစ်ခိုင်အောင် ကြိုးစားပါ။ မြေယာ၊ အိမ်ခြံမြေ ကိစ္စတွေ အဆင်ပြေတတ်ပါတယ်။" },
+      1:{ name:"အထွန်း", tag:"တောက်ပ ထွန်းကားခြင်း",
+        meaning:"အထွန်းဘုတ်ဖွားဟာ အလုပ်အကိုင် တိုးတက် ထွန်းကားပြီး လူကြား သူကြားမှာ ထင်ရှား ကျော်ကြားတတ်သူတွေ ဖြစ်ပါတယ်။ အခွင့်အလမ်း ကောင်းတွေ မကြာခဏ ကြုံရပြီး ကိုယ့်အရည်အချင်းကို ပြသခွင့် ရတတ်ပါတယ်။",
+        advice:"အခွင့်အလမ်း လာရင် ရဲရဲ ဖမ်းဆုပ်ပါ။ ကိုယ့်နာမည်နဲ့ ဂုဏ်သတင်းကို တန်ဖိုးထားပါ။" },
+      2:{ name:"ရာဇာ", tag:"ဘုန်းကံ နှင့် ဩဇာ",
+        meaning:"ရာဇာဘုတ်ဖွားဟာ ဘုန်းကံ ကြီးမားပြီး လူအများကို ဦးဆောင် အုပ်ချုပ်နိုင်စွမ်း ရှိသူတွေ ဖြစ်ပါတယ်။ ဩဇာအာဏာ ရှိပြီး လူကြီးသူမရဲ့ အကူအညီ ရတတ်ပါတယ်။ ခေါင်းဆောင် နေရာကို ရောက်လာတတ်ပါတယ်။",
+        advice:"ဩဇာကို တရားသော နည်းနဲ့ သုံးပါ။ လူကြီးသူမကို ရိုသေရင် လမ်းကြောင်း ပိုပွင့်ပါတယ်။" },
+      3:{ name:"အဓိပတိ", tag:"အမြင့်ဆုံး အခွင့်အာဏာ",
+        meaning:"အဓိပတိဘုတ်ဖွားဟာ မဟာဘုတ် ခုနစ်ပါးထဲမှာ အမြင့်ဆုံး ဘုတ်ဖြစ်ပြီး မိမိနယ်ပယ်ရဲ့ အကြီးအကဲ ဖြစ်လာတတ်သူတွေ ဖြစ်ပါတယ်။ ဆုံးဖြတ်ချက် ပြတ်သားပြီး အများက အားကိုး လေးစားပါတယ်။ ကိုယ်ပိုင် လုပ်ငန်း တည်ထောင်ရင် အောင်မြင်တတ်ပါတယ်။",
+        advice:"တာဝန်ကြီးတွေကို ရဲရဲ ယူပါ။ ဒါပေမယ့် အကြံဉာဏ် ကောင်းတွေကိုလည်း နားထောင်တတ်ပါစေ။" },
+      4:{ name:"မရဏ", tag:"အပြောင်းအလဲ နှင့် အဆုံးသတ်",
+        meaning:"မရဏဘုတ်ဖွားဟာ ဘဝမှာ အပြောင်းအလဲ များတတ်သူတွေ ဖြစ်ပါတယ်။ အလုပ်၊ နေရာ၊ ပတ်ဝန်းကျင် ပြောင်းလဲမှုတွေ မကြာခဏ ကြုံရပေမယ့် အဆုံးသတ် တစ်ခုတိုင်းဟာ အစသစ် တစ်ခုရဲ့ တံခါး ဖြစ်နေတတ်ပါတယ်။ ကျန်းမာရေးကို အထူး ဂရုစိုက်ရပါမယ်။",
+        advice:"ပြောင်းလဲမှုကို မကြောက်ပါနဲ့ — အဟောင်း ပြီးမှ အသစ် စပါတယ်။ ကျန်းမာရေး စစ်ဆေးမှု ပုံမှန် လုပ်ပါ။" },
+      5:{ name:"သိုက်", tag:"စည်းစိမ် စုဆောင်းခြင်း",
+        meaning:"သိုက်ဘုတ်ဖွားဟာ ငွေကြေး စုဆောင်း သိုမှီးနိုင်စွမ်း ရှိပြီး စည်းစိမ်ဥစ္စာ တိုးပွားတတ်သူတွေ ဖြစ်ပါတယ်။ ကုန်သွယ်ရေး၊ ရင်းနှီးမြှုပ်နှံမှုမှာ အမြင် ထက်မြက်ပြီး အချိန်ကြာလာတာနဲ့အမျှ ချမ်းသာ ကြွယ်ဝလာတတ်ပါတယ်။",
+        advice:"စုဆောင်းမှု အလေ့အကျင့်ကို ဆက်ထိန်းပါ။ ရင်းနှီးမြှုပ်နှံမှုမှာ မြန်မြန် အမြတ်ထုတ်ချင်စိတ်ကို ထိန်းပါ။" },
+      6:{ name:"ပုတိ", tag:"သတိ နှင့် ပြင်ဆင်ခြင်း",
+        meaning:"ပုတိဘုတ်ဖွားဟာ အလုပ်ကိစ္စတွေ ပျက်ယွင်း လွယ်တတ်၊ အတားအဆီး များတတ်သူတွေ ဖြစ်ပါတယ်။ ဒါပေမယ့် ကြိုတင် ပြင်ဆင်မှု ကောင်းရင် အခက်အခဲကို ကျော်လွှားနိုင်ပြီး အတွေ့အကြုံကနေ သင်ယူတတ်တဲ့ သန်မာသူတွေ ဖြစ်လာပါတယ်။ ကုသိုလ် ကောင်းမှု ပြုလုပ်ခြင်း အကျိုးပေးပါတယ်။",
+        advice:"အလုပ် မစခင် စာရွက်စာတမ်း သေချာ စစ်ပါ၊ အရန်အစီအစဉ် ထားပါ။ ကုသိုလ်ပြု၊ စိတ်ထားကောင်းရင် ကံ ပြန်ကောင်းလာပါမယ်။" }
+    };
+    /* Canonical layout order for the diagram (3x3 with center motif) */
+    var BOTE_LAYOUT = [6, 3, 1, 0, null, 2, 4, 5];
+    /* BOTE_LAYOUT cells: [ပုတိ, အဓိပတိ, အထွန်း, ဘင်္ဂ, center, ရာဇာ, မရဏ, သိုက်] — grid fills 8 around center */
+
+    /* ================= Zodiac (ရာသီခွင်) ================= */
+    var ZODIAC = [
+      { name:"မိဿ", en:"Aries", glyph:"♈", dates:"မတ် ၂၁ – ဧပြီ ၁၉", from:[3,21], to:[4,19], element:"မီး", ruler:"အင်္ဂါ",
+        trait:"ရဲရင့်ပြီး စတင်လုပ်ဆောင်ရတာကို နှစ်သက်တဲ့ ခေါင်းဆောင် သဘာဝ ရှိပါတယ်။" },
+      { name:"ပြိဿ", en:"Taurus", glyph:"♉", dates:"ဧပြီ ၂၀ – မေ ၂၀", from:[4,20], to:[5,20], element:"မြေ", ruler:"သောကြာ",
+        trait:"တည်ငြိမ်ပြီး လက်တွေ့ကျတဲ့ စဉ်းစားပုံနဲ့ စည်းစိမ်ကို တန်ဖိုးထားပါတယ်။" },
+      { name:"မေထုန်", en:"Gemini", glyph:"♊", dates:"မေ ၂၁ – ဇွန် ၂၀", from:[5,21], to:[6,20], element:"လေ", ruler:"ဗုဒ္ဓဟူး",
+        trait:"ဉာဏ်ထက်မြက်ပြီး စကားပြောကောင်းတဲ့ ဆက်သွယ်ရေး ကျွမ်းကျင်သူ ဖြစ်ပါတယ်။" },
+      { name:"ကရကဋ်", en:"Cancer", glyph:"♋", dates:"ဇွန် ၂၁ – ဇူလိုင် ၂၂", from:[6,21], to:[7,22], element:"ရေ", ruler:"လ",
+        trait:"စိတ်ထား နူးညံ့ပြီး မိသားစုနဲ့ အိမ်ကို အထူး တွယ်တာပါတယ်။" },
+      { name:"သိဟ်", en:"Leo", glyph:"♌", dates:"ဇူလိုင် ၂၃ – ဩဂုတ် ၂၂", from:[7,23], to:[8,22], element:"မီး", ruler:"နေ",
+        trait:"ဂုဏ်သိက္ခာကို တန်ဖိုးထားပြီး လူအများရဲ့ ဂရုစိုက်မှုကို ရတတ်ပါတယ်။" },
+      { name:"ကန်", en:"Virgo", glyph:"♍", dates:"ဩဂုတ် ၂၃ – စက်တင် ၂၂", from:[8,23], to:[9,22], element:"မြေ", ruler:"ဗုဒ္ဓဟူး",
+        trait:"စနစ်တကျ သေသေချာချာ လုပ်တတ်ပြီး အသေးစိတ်ကို ဂရုစိုက်ပါတယ်။" },
+      { name:"တူ", en:"Libra", glyph:"♎", dates:"စက်တင် ၂၃ – အောက် ၂၂", from:[9,23], to:[10,22], element:"လေ", ruler:"သောကြာ",
+        trait:"မျှတမှုနဲ့ သဟဇာတကို လိုလားပြီး လူမှုရေး လိမ္မာပါတယ်။" },
+      { name:"ဗြိစ္ဆာ", en:"Scorpio", glyph:"♏", dates:"အောက် ၂၃ – နို ၂၁", from:[10,23], to:[11,21], element:"ရေ", ruler:"အင်္ဂါ",
+        trait:"စိတ် ပြင်းထန်ပြီး ဆုံးဖြတ်ချက် ပြတ်သားတဲ့ နက်နဲသူ ဖြစ်ပါတယ်။" },
+      { name:"ဓနု", en:"Sagittarius", glyph:"♐", dates:"နို ၂၂ – ဒီ ၂၁", from:[11,22], to:[12,21], element:"မီး", ruler:"ကြာသပတေး",
+        trait:"လွတ်လပ်မှုကို ချစ်ပြီး ခရီးသွားခြင်း၊ သင်ယူခြင်းကို နှစ်သက်ပါတယ်။" },
+      { name:"မကာရ", en:"Capricorn", glyph:"♑", dates:"ဒီ ၂၂ – ဇန် ၁၉", from:[12,22], to:[1,19], element:"မြေ", ruler:"စနေ",
+        trait:"ဇွဲကောင်းပြီး ရေရှည် ရည်မှန်းချက်နဲ့ အောင်မြင်မှု တည်ဆောက်ပါတယ်။" },
+      { name:"ကုံ", en:"Aquarius", glyph:"♒", dates:"ဇန် ၂၀ – ဖေ ၁၈", from:[1,20], to:[2,18], element:"လေ", ruler:"စနေ",
+        trait:"စိတ်ကူး ဆန်းသစ်ပြီး လူ့အဖွဲ့အစည်း ကောင်းကျိုးကို တွေးပါတယ်။" },
+      { name:"မိန်", en:"Pisces", glyph:"♓", dates:"ဖေ ၁၉ – မတ် ၂၀", from:[2,19], to:[3,20], element:"ရေ", ruler:"ကြာသပတေး",
+        trait:"စာနာစိတ် ကြီးမားပြီး အနုပညာ ခံစားမှု မြင့်မားပါတယ်။" }
+    ];
+    function zodiacOf(date){
+      var m = date.getMonth() + 1, d = date.getDate();
+      for (var i = 0; i < ZODIAC.length; i++){
+        var z = ZODIAC[i];
+        var f = z.from, t = z.to;
+        if (f[0] <= t[0]){
+          if ((m === f[0] && d >= f[1]) || (m === t[0] && d <= t[1]) || (m > f[0] && m < t[0])) return z;
+        } else {
+          if ((m === f[0] && d >= f[1]) || (m === t[0] && d <= t[1]) || m > f[0] || m < t[0]) return z;
+        }
+      }
+      return ZODIAC[9];
+    }
+    var DAILY_GENERAL = [
+      "ဒီနေ့ဟာ အလုပ် အသစ်တွေ စတင်ဖို့ ကောင်းတဲ့ နေ့ ဖြစ်ပါတယ်။ စိတ်ကို တည်ငြိမ်အောင် ထားပြီး တစ်ဆင့်ချင်း လုပ်ပါ။",
+      "ဒီနေ့ လူကြီးသူမ (သို့) အတွေ့အကြုံ ရှိသူဆီက အကြံကောင်း ရလာနိုင်ပါတယ်။ နားထောင်တတ်ပါစေ။",
+      "ဒီနေ့ မမျှော်လင့်ထားတဲ့ သတင်းကောင်း ကြားရနိုင်ပါတယ်။ အခွင့်အလမ်းကို လက်လွတ် မခံပါနဲ့။",
+      "ဒီနေ့ အရာရာကို မြန်မြန် မဆုံးဖြတ်ပါနဲ့။ သေချာ စဉ်းစားပြီးမှ လုပ်ရင် အမှား နည်းပါမယ်။",
+      "ဒီနေ့ မိတ်ဆွေ အပေါင်းအသင်းနဲ့ ဆက်ဆံရေး ကောင်းမွန်ပြီး အကူအညီ ရလာပါမယ်။",
+      "ဒီနေ့ စိတ်အေးအေးထားပြီး ကိုယ့်အလုပ်ကို အာရုံစိုက်ပါ။ အသေးအဖွဲ ကိစ္စတွေမှာ စိတ်မရှုပ်ပါနဲ့။",
+      "ဒီနေ့ ကြိုးစားမှု အရာထင်လာမယ့် နေ့ ဖြစ်ပါတယ်။ ဇွဲ မလျှော့ပါနဲ့။",
+      "ဒီနေ့ အပန်းဖြေ အနားယူဖို့လည်း အချိန်ပေးပါ။ စိတ်ဖိစီးမှု လျှော့မှ အလုပ် ပိုတွင်ပါမယ်။"
+    ];
+    var DAILY_WORK = [
+      "အလုပ်မှာ တာဝန် အသစ် ရလာနိုင်ပြီး ကိုယ့်အရည်အချင်းကို ပြသခွင့် ရပါမယ်။",
+      "လုပ်ဖော်ကိုင်ဖက်နဲ့ ပူးပေါင်း လုပ်ရင် အလုပ် မြန်မြန် ပြီးပါမယ်။",
+      "အလုပ်ကိစ္စ စာရွက်စာတမ်း သေချာ စစ်ဆေးပြီးမှ လက်မှတ် ထိုးပါ။",
+      "အစည်းအဝေး (သို့) ဆွေးနွေးပွဲမှာ သင့်အကြံ လက်ခံ ရနိုင်ပါတယ်။",
+      "အလုပ် ပြောင်းဖို့ စဉ်းစားနေရင် ဒီနေ့ သတင်း အချက်အလက် စုဆောင်းပါ။"
+    ];
+    var DAILY_MONEY = [
+      "ငွေကြေး အဝင်အထွက် မျှတပြီး စုဆောင်းဖို့ ကောင်းတဲ့ နေ့ ဖြစ်ပါတယ်။",
+      "မလိုအပ်တဲ့ အသုံးစရိတ်ကို လျှော့ရင် လကုန်ခါနီး အဆင်ပြေပါမယ်။",
+      "ရင်းနှီးမြှုပ်နှံမှု ကိစ္စ အလျင်စလို မလုပ်ပါနဲ့၊ သေချာ လေ့လာပါ။",
+      "အကြွေး ကိစ္စ တစ်စိတ်တစ်ပိုင်း ဖြေရှင်း နိုင်ပါမယ်။",
+      "ဝင်ငွေ လမ်းကြောင်း အသစ် တစ်ခု အကြောင်း သတင်း ကြားရနိုင်ပါတယ်။"
+    ];
+    var DAILY_LOVE = [
+      "ချစ်သူ / အိမ်ထောင်ဖက်နဲ့ နားလည်မှု ပိုကောင်းလာပါမယ်။ စကား ချိုချို ပြောပါ။",
+      "တစ်ကိုယ်တည်း သူတွေအတွက် လူသစ် တစ်ယောက်နဲ့ ဆုံတွေ့နိုင်ပါတယ်။",
+      "အတိတ် ကိစ္စ အဟောင်းတွေ ပြန်မဖော်ပါနဲ့။ လက်ရှိကို တန်ဖိုးထားပါ။",
+      "မိသားစုနဲ့ အချိန် ပေးရင် စိတ်ချမ်းသာမှု ရပါမယ်။",
+      "ခံစားချက်ကို ပွင့်ပွင့်လင်းလင်း ပြောပြရင် ဆက်ဆံရေး တိုးတက်ပါမယ်။"
+    ];
+    var DAILY_HEALTH = [
+      "ကျန်းမာရေး ကောင်းပေမယ့် အစားအသောက် ပုံမှန်စားပြီး ရေများများ သောက်ပါ။",
+      "အိပ်ရေး ဝဝ အိပ်ဖို့ ဂရုစိုက်ပါ။ ခေါင်းကိုက် သက်သာပါမယ်။",
+      "လမ်းလျှောက် လေ့ကျင့်ခန်း အနည်းငယ် လုပ်ရင် စိတ်လန်းဆန်းပါမယ်။",
+      "စိတ်ဖိစီးမှု များနေရင် အသက်ရှု လေ့ကျင့်ခန်း လုပ်ကြည့်ပါ။",
+      "မျက်စိ အားစိုက် အလုပ် များနေရင် အနားယူပေးပါ။"
+    ];
+    var LUCKY_COLORS = ["အနီ","အဝါ","အစိမ်း","အပြာ","ပန်းရောင်","အဖြူ","ရွှေဝါ","အညို","ခရမ်း","လိမ္မော်"];
+
+    /* ================= Name numerology ================= */
+    /* Traditional day-letter groups -> day number */
+    var LETTER_VALUES = {};
+    (function(){
+      var groups = {
+        1:["အ","ဣ","ဤ","ဥ","ဦ","ဧ","ဩ","ဪ","ဿ"],
+        2:["က","ခ","ဂ","ဃ","င"],
+        3:["စ","ဆ","ဇ","ဈ","ည"],
+        4:["ဋ","ဌ","ဍ","ဎ","ဏ","တ","ထ","ဒ","န"],
+        5:["ပ","ဖ","ဗ","ဘ","မ"],
+        6:["သ","ဟ","ဠ"],
+        7:["ယ"],
+        8:["ရ","လ","ဝ"]
+      };
+      /* Note: ယ often grouped with Rahu letters in naming charts; kept with 7-group per common name charts */
+      for (var k in groups){ groups[k].forEach(function(ch){ LETTER_VALUES[ch] = +k; }); }
+    })();
+    var NUM_MEANINGS = {
+      1:{ name:"နေဂဏန်း", theme:"ခေါင်းဆောင်မှု နှင့် စတင်ခြင်း",
+        text:"ဂဏန်း ၁ ရသူတွေဟာ ကိုယ်ပိုင် လမ်းကြောင်းနဲ့ သွားတတ်ပြီး ခေါင်းဆောင် ဖြစ်လာတတ်ပါတယ်။ စတင် လုပ်ဆောင်နိုင်စွမ်း မြင့်ပြီး လွတ်လပ်မှုကို တန်ဖိုးထားပါတယ်။ ကိုယ့်ကိုယ်ကို ယုံကြည်မှု ရှိပေမယ့် သူများရဲ့ အကြံကိုပါ နားထောင်တတ်ဖို့ လိုပါတယ်။" },
+      2:{ name:"လဂဏန်း", theme:"သဟဇာတ နှင့် စာနာစိတ်",
+        text:"ဂဏန်း ၂ ရသူတွေဟာ စိတ်ထား နူးညံ့ပြီး လူအများနဲ့ သဟဇာတ ဖြစ်အောင် နေတတ်ပါတယ်။ အပေါင်းအသင်း ကောင်းပြီး ပူးပေါင်း လုပ်ဆောင်ရာမှာ ထူးချွန်ပါတယ်။ ခံစားချက် ကြွယ်ဝပေမယ့် ဆုံးဖြတ်ချက်မှာ တစ်ခါတလေ တွေဝေတတ်ပါတယ်။" },
+      3:{ name:"အင်္ဂါဂဏန်း", theme:"ဖန်တီးမှု နှင့် ဆက်သွယ်ရေး",
+        text:"ဂဏန်း ၃ ရသူတွေဟာ စကားပြော ကောင်းပြီး ဖန်တီးမှု အားကောင်းပါတယ်။ လူချစ်လူခင် များပြီး စွမ်းအင် ပြည့်ဝပါတယ်။ အာရုံ စူးစိုက်မှု ပျံ့နှံ့ လွယ်တာကို သတိထားပြီး အလုပ် တစ်ခု ပြီးအောင် လုပ်တဲ့ အလေ့အကျင့် မွေးပါ။" },
+      4:{ name:"ဗုဒ္ဓဟူးဂဏန်း", theme:"စနစ်ကျမှု နှင့် တည်တံ့မှု",
+        text:"ဂဏန်း ၄ ရသူတွေဟာ စနစ်တကျ လုပ်တတ်ပြီး ယုံကြည်စိတ်ချရသူတွေ ဖြစ်ပါတယ်။ လက်တွေ့ကျတဲ့ စဉ်းစားပုံနဲ့ အခြေခံ ခိုင်မာအောင် တည်ဆောက်တတ်ပါတယ်။ ပြောင်းလဲမှုကို နှေးကွေးစွာ လက်ခံတတ်တာကို သတိထားပါ။" },
+      5:{ name:"ကြာသပတေးဂဏန်း", theme:"လွတ်လပ်မှု နှင့် အပြောင်းအလဲ",
+        text:"ဂဏန်း ၅ ရသူတွေဟာ လွတ်လပ်မှုကို ချစ်ပြီး အပြောင်းအလဲကို မကြောက်သူတွေ ဖြစ်ပါတယ်။ ခရီးသွားခြင်း၊ သင်ယူခြင်း၊ အတွေ့အကြုံ အသစ်တွေကနေ အောင်မြင်မှု ရတတ်ပါတယ်။ စိတ်မြန်တာကို ထိန်းပြီး ရေရှည် အစီအစဉ် ထားပါ။" },
+      6:{ name:"သောကြာဂဏန်း", theme:"အချစ် နှင့် တာဝန်ယူမှု",
+        text:"ဂဏန်း ၆ ရသူတွေဟာ မိသားစုနဲ့ အိမ်ကို ချစ်ပြီး တာဝန်ယူစိတ် ကြီးမားပါတယ်။ အလှအပ အနုပညာ ခံစားမှု ကောင်းပြီး သူများကို ပြုစု စောင့်ရှောက်တတ်ပါတယ်။ ကိုယ့်အတွက်လည်း အချိန် ပေးဖို့ မမေ့ပါနဲ့။" },
+      7:{ name:"စနေဂဏန်း", theme:"ဉာဏ်ပညာ နှင့် ဆင်ခြင်ခြင်း",
+        text:"ဂဏန်း ၇ ရသူတွေဟာ အတွေးအခေါ် နက်နဲပြီး တစ်ယောက်တည်း ဆင်ခြင် စဉ်းစားရတာကို နှစ်သက်ပါတယ်။ ပညာရေး၊ သုတေသန၊ တရား ဘာဝနာ နယ်ပယ်မှာ ထူးချွန်တတ်ပါတယ်။ လူအများနဲ့ ရောနှောဖို့ တစ်ခါတလေ အားထုတ်ဖို့ လိုပါတယ်။" },
+      8:{ name:"ရာဟုဂဏန်း", theme:"စွမ်းအား နှင့် စီးပွားရေး",
+        text:"ဂဏန်း ၈ ရသူတွေဟာ စီးပွားရေး အမြင် ထက်မြက်ပြီး စွမ်းအား ကြီးမားတဲ့ ရည်မှန်းချက် ရှိပါတယ်။ ငွေကြေး စီမံခန့်ခွဲမှု ကောင်းပြီး ကြီးမားတဲ့ အလုပ်တွေ လုပ်နိုင်စွမ်း ရှိပါတယ်။ အလုပ် နဲ့ အနားယူမှု မျှတအောင် ထားပါ။" },
+      9:{ name:"နဝင်းဂဏန်း", theme:"ပြီးပြည့်စုံမှု နှင့် ကုသိုလ်စိတ်",
+        text:"ဂဏန်း ၉ ရသူတွေဟာ စိတ်ထား ကြီးမားပြီး သူများ အကျိုးကို ဆောင်ရွက်ချင်စိတ် ရှိပါတယ်။ နဝင်း ကိုးပါး ပြည့်စုံတဲ့ ဂဏန်း ဖြစ်လို့ ကံကောင်းခြင်း နဲ့ ပြီးပြည့်စုံမှုကို ကိုယ်စားပြုပါတယ်။ ကိုယ့်ခံစားချက်ကို ချစ်သူများထံ ဖွင့်ပြောတတ်ဖို့ လိုပါတယ်။" }
+    };
+
+    /* ================= Compatibility ================= */
+    /* pair scores keyed by day-entity index pair (0=Sun..6=Sat, 7=Rahu) */
+    var PAIR_SCORES = {
+      "0-4":95, "0-6":45, "1-3":92, "1-7":50, "2-6":48, "3-6":88,
+      "6-7":90, "3-7":55, "0-1":88, "2-4":86, "4-5":85, "5-6":84,
+      "0-3":82, "1-4":84, "2-5":80, "4-6":78, "0-5":76, "1-6":74,
+      "3-4":81, "5-7":86, "2-7":72, "0-7":58, "1-2":79, "4-7":83,
+      "2-3":70, "3-5":87, "0-2":68, "1-5":83, "5-5":88
+    };
+    function pairScore(a, b){
+      if (a === b) return 90;
+      var key1 = a + "-" + b, key2 = b + "-" + a;
+      if (PAIR_SCORES[key1] != null) return PAIR_SCORES[key1];
+      if (PAIR_SCORES[key2] != null) return PAIR_SCORES[key2];
+      return 72;
+    }
+    function verdictOf(score){
+      if (score >= 88) return { t:"အလွန် လိုက်ဖက်ပါတယ်", d:"နေ့နံ အရ မိတ်ဖက် ကောင်းတွေ ဖြစ်ပြီး တစ်ဦးကို တစ်ဦး အားဖြည့် ပေးနိုင်ပါတယ်။ ဆက်ဆံရေး ရေရှည် တည်တံ့ဖို့ အခြေခံ ကောင်းပါတယ်။" };
+      if (score >= 78) return { t:"လိုက်ဖက်မှု ကောင်းပါတယ်", d:"အများအားဖြင့် သဟဇာတ ဖြစ်ပြီး အနည်းငယ် နားလည်မှု လွဲတာလောက်ပဲ ရှိတတ်ပါတယ်။ စကားပြော ဆိုမှု ပွင့်လင်းရင် အဆင်ပြေ ပါမယ်။" };
+      if (score >= 62) return { t:"အလယ်အလတ် လိုက်ဖက်ပါတယ်", d:"စိတ်သဘာဝ မတူတဲ့ အပိုင်းတွေ ရှိပေမယ့် လေးစား နားလည်မှု ထားရင် ကောင်းမွန်တဲ့ ဆက်ဆံရေး ဖြစ်လာနိုင်ပါတယ်။" };
+      return { t:"ကြိုးစား နားလည်ဖို့ လိုပါတယ်", d:"နေ့နံ အရ ရန်ဖက် သဘော ပါတဲ့အတွက် အငြင်းပွားမှု ဖြစ်လွယ်ပါတယ်။ စိတ်ရှည်မှု၊ ခွင့်လွှတ်မှုနဲ့ ဆက်သွယ်မှု ကောင်းကောင်း ထားမှ ရေရှည် အဆင်ပြေပါမယ်။" };
+    }
+
+    /* ================= Tabs ================= */
+    var tabBtns = document.querySelectorAll(".tab-btn");
+    tabBtns.forEach(function(btn){
+      btn.addEventListener("click", function(){
+        tabBtns.forEach(function(b){ b.classList.remove("active"); });
+        btn.classList.add("active");
+        document.querySelectorAll(".panel").forEach(function(p){ p.classList.remove("active"); });
+        el("panel-" + btn.getAttribute("data-tab")).classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+    function switchTab(name){
+      tabBtns.forEach(function(b){ b.classList.toggle("active", b.getAttribute("data-tab") === name); });
+      document.querySelectorAll(".panel").forEach(function(p){ p.classList.remove("active"); });
+      el("panel-" + name).classList.add("active");
+    }
+
+    /* ================= Header: today ================= */
+    (function(){
+      var now = new Date();
+      var dowName = DAYS[now.getDay()].name;
+      var MONTHS_MY = ["ဇန်နဝါရီ","ဖေဖော်ဝါရီ","မတ်","ဧပြီ","မေ","ဇွန်","ဇူလိုင်","ဩဂုတ်","စက်တင်ဘာ","အောက်တိုဘာ","နိုဝင်ဘာ","ဒီဇင်ဘာ"];
+      el("todayDow").textContent = dowName + "နေ့";
+      el("todayDate").textContent = toMy(now.getDate()) + " " + MONTHS_MY[now.getMonth()] + " " + toMy(now.getFullYear());
+      el("todayMyYear").textContent = toMy(myanmarYear(now)) + " ခု";
+      el("zodiacToday").textContent = toMy(now.getDate()) + " " + MONTHS_MY[now.getMonth()] + " " + toMy(now.getFullYear());
+    })();
+
+    /* ================= Day grid (နေ့နံ ၈ ပါး) ================= */
+    (function(){
+      var grid = el("dayGrid");
+      DAYS.forEach(function(d, i){
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "z-card";
+        b.innerHTML = '<div class="glyph">' + d.glyph + '</div><div class="nm">' + d.name + '</div><div class="dt">' + d.animal + " ・ ဂဏန်း " + toMy(d.num) + "</div>";
+        b.addEventListener("click", function(){
+          grid.querySelectorAll(".z-card").forEach(function(c){ c.classList.remove("active"); });
+          b.classList.add("active");
+          var box = el("dayDetail");
+          box.classList.remove("hidden");
+          box.innerHTML =
+            "<h4>" + d.name + "နေ့ဖွား — " + d.animal + " (ဂြိုဟ် - " + d.planet + ")</h4>" +
+            "<p>" + d.trait + "</p>" +
+            "<h4>အားသာချက်</h4><p>" + d.strength + "</p>" +
+            "<h4>သတိထားရန်</h4><p>" + d.caution + "</p>" +
+            "<h4>ကံကောင်းစေသော အရာများ</h4><p>အရောင် — " + d.color + " ・ ဂဏန်း — " + toMy(d.num) + " ・ ကျောက် — " + d.gem + " ・ လားရာ — " + d.dir + "</p>";
+          box.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        });
+        grid.appendChild(b);
+      });
+    })();
+
+    /* ================= Main calculator ================= */
+    function starRow(n){
+      var s = "";
+      for (var i = 1; i <= 5; i++) s += i <= n ? "★" : '<span class="off">★</span>';
+      return '<span class="stars">' + s + "</span>";
+    }
+    el("calcForm").addEventListener("submit", function(ev){
+      ev.preventDefault();
+      var v = el("birthDate").value;
+      if (!v) return;
+      var parts = v.split("-");
+      var date = new Date(+parts[0], +parts[1] - 1, +parts[2]);
+      var timeStr = el("birthTime").value || "";
+      var day = dayEntity(date, timeStr);
+      var my = myanmarYear(date);
+      var rem = ((my % 7) + 7) % 7;
+      var bote = MAHABOTE[rem];
+      var z = zodiacOf(date);
+      var todaySeed = dayOfYear(new Date()) + DAYS.indexOf(day) * 13;
+      var luckStars = seededRange(todaySeed, 3, 5);
+      var luckText = seededPick(DAILY_GENERAL, todaySeed + 3);
+
+      var diagram = "";
+      BOTE_LAYOUT.forEach(function(cellVal, idx){
+        if (idx === 4){ diagram += '<div class="bote-center" aria-hidden="true">✦</div>'; return; }
+        var c = MAHABOTE[cellVal];
+        var hit = cellVal === rem;
+        diagram += '<div class="bote-cell' + (hit ? " hit" : "") + '"><span>' + c.name + "</span><small>" + (hit ? "သင့်ဘုတ်" : c.tag) + "</small></div>";
+      });
+      /* Append a 9th info cell so the 3x3 grid is complete */
+      diagram += '<div class="bote-cell"><span>' + toMy(my) + '</span><small>မြန်မာ သက္ကရာဇ်</small></div>';
+
+      el("calcResult").classList.remove("hidden");
+      el("calcResult").innerHTML =
+        '<div class="result-head">' +
+          '<div class="animal-badge"><span class="glyph">' + day.glyph + '</span><span class="cap">' + day.animal + "</span></div>" +
+          "<div><h3>" + day.name + "နေ့ဖွား ・ " + bote.name + "ဘုတ်</h3>" +
+          "<p>မြန်မာသက္ကရာဇ် " + toMy(my) + " ခုနှစ် ・ အသက် " + toMy(ageOf(date)) + " နှစ် ・ ရာသီခွင် " + z.name + " (" + z.en + ")</p></div>" +
+        "</div>" +
+        '<div class="stat-grid">' +
+          '<div class="stat"><div class="k">နေ့နံ / ဂြိုဟ်</div><div class="v">' + day.name + " / " + day.planet + "</div></div>" +
+          '<div class="stat"><div class="k">မဟာဘုတ်</div><div class="v">' + bote.name + " — " + bote.tag + "</div></div>" +
+          '<div class="stat"><div class="k">ကံကောင်း အရောင်</div><div class="v"><span class="swatch" style="background:' + day.swatch + '"></span>' + day.color + "</div></div>" +
+          '<div class="stat"><div class="k">ကံကောင်း ဂဏန်း</div><div class="v">' + toMy(day.num) + "</div></div>" +
+          '<div class="stat"><div class="k">ကံကောင်း ကျောက်</div><div class="v">' + day.gem + "</div></div>" +
+          '<div class="stat"><div class="k">ကံကောင်း လားရာ</div><div class="v">' + day.dir + "</div></div>" +
+        "</div>" +
+        '<div class="reading">' +
+          "<h4>မဟာဘုတ် ပုံစံ</h4>" +
+          '<div class="bote-diagram">' + diagram + "</div>" +
+          "<h4>" + bote.name + "ဘုတ် အဟော</h4><p>" + bote.meaning + "</p>" +
+          "<h4>အကြံပြုချက်</h4><p>" + bote.advice + "</p>" +
+          "<h4>" + day.name + "နေ့ဖွား စရိုက်</h4><p>" + day.trait + "</p>" +
+          "<h4>အားသာချက် / သတိထားရန်</h4><p>အားသာချက် — " + day.strength + "<br/>သတိထားရန် — " + day.caution + "</p>" +
+          "<h4>ယနေ့ ကံကြမ္မာ " + starRow(luckStars) + "</h4><p>" + luckText + "</p>" +
+          '<p style="margin-top:14px;"><a href="#" id="goZodiac" style="color:var(--maroon);font-weight:700;">သင့် ရာသီခွင် (' + z.name + ") ဒီနေ့ ဟောစာတမ်း အပြည့်အစုံ ဖတ်ရန် →</a></p>" +
+        "</div>";
+      el("calcResult").scrollIntoView({ behavior: "smooth", block: "start" });
+      var gz = el("goZodiac");
+      gz.addEventListener("click", function(e){
+        e.preventDefault();
+        selectZodiac(ZODIAC.indexOf(z));
+        switchTab("zodiac");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+
+    /* ================= Zodiac panel ================= */
+    var selectedZodiac = -1;
+    function selectZodiac(i){
+      selectedZodiac = i;
+      var grid = el("zodiacGrid");
+      grid.querySelectorAll(".z-card").forEach(function(c, ci){ c.classList.toggle("active", ci === i); });
+      var z = ZODIAC[i];
+      var seed = dayOfYear(new Date()) * 31 + i * 101;
+      var work = seededRange(seed + 1, 55, 98);
+      var money = seededRange(seed + 2, 50, 98);
+      var love = seededRange(seed + 3, 52, 99);
+      var health = seededRange(seed + 4, 58, 97);
+      var luckyNum = seededRange(seed + 5, 1, 99);
+      var luckyColor = seededPick(LUCKY_COLORS, seed + 6);
+      function meter(label, val){
+        return '<div class="meter-row"><span>' + label + '</span><span class="meter"><i style="width:' + val + '%"></i></span><span class="pct">' + toMy(val) + "%</span></div>";
+      }
+      el("zodiacResult").classList.remove("hidden");
+      el("zodiacResult").innerHTML =
+        '<div class="result-head">' +
+          '<div class="animal-badge"><span class="glyph" style="font-size:36px;">' + z.glyph + '</span><span class="cap">' + z.element + "ဓာတ်</span></div>" +
+          "<div><h3>" + z.name + "ရာသီ (" + z.en + ")</h3>" +
+          "<p>" + z.dates + " ・ အုပ်စိုးဂြိုဟ် — " + z.ruler + " ・ ဓာတ် — " + z.element + "</p></div>" +
+        "</div>" +
+        '<div class="reading" style="margin-top:0;">' +
+          "<p>" + z.trait + "</p>" +
+          "<h4>ဒီနေ့ အဟော</h4><p>" + seededPick(DAILY_GENERAL, seed + 11) + "</p>" +
+          "<h4>အလုပ်</h4><p>" + seededPick(DAILY_WORK, seed + 12) + "</p>" +
+          "<h4>ငွေကြေး</h4><p>" + seededPick(DAILY_MONEY, seed + 13) + "</p>" +
+          "<h4>အချစ်ရေး</h4><p>" + seededPick(DAILY_LOVE, seed + 14) + "</p>" +
+          "<h4>ကျန်းမာရေး</h4><p>" + seededPick(DAILY_HEALTH, seed + 15) + "</p>" +
+          "<h4>ကံ အဆင့်များ</h4>" +
+          meter("အလုပ်", work) + meter("ငွေကြေး", money) + meter("အချစ်", love) + meter("ကျန်းမာရေး", health) +
+          "<h4>ကံကောင်း ဂဏန်း / အရောင်</h4><p>ဂဏန်း — " + toMy(luckyNum) + " ・ အရောင် — " + luckyColor + "</p>" +
+        "</div>";
+    }
+    (function(){
+      var grid = el("zodiacGrid");
+      ZODIAC.forEach(function(z, i){
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "z-card";
+        b.innerHTML = '<div class="glyph">' + z.glyph + '</div><div class="nm">' + z.name + '</div><div class="dt">' + z.dates + "</div>";
+        b.addEventListener("click", function(){
+          selectZodiac(i);
+          el("zodiacResult").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+        grid.appendChild(b);
+      });
+      selectZodiac(ZODIAC.indexOf(zodiacOf(new Date())));
+    })();
+
+    /* ================= Name numerology panel ================= */
+    (function(){
+      var grid = el("numGrid");
+      Object.keys(NUM_MEANINGS).forEach(function(k){
+        var m = NUM_MEANINGS[k];
+        var d = document.createElement("div");
+        d.className = "stat";
+        d.innerHTML = '<div class="k">ဂဏန်း ' + toMy(k) + " — " + m.name + '</div><div class="v" style="font-size:16px;">' + m.theme + "</div>";
+        grid.appendChild(d);
+      });
+    })();
+    el("nameForm").addEventListener("submit", function(ev){
+      ev.preventDefault();
+      var raw = el("nameInput").value.trim();
+      var box = el("nameResult");
+      box.classList.remove("hidden");
+      if (!raw){
+        box.innerHTML = "<p>နာမည် အရင် ထည့်ပါ။</p>";
+        return;
+      }
+      var total = 0, counted = [], skipped = [];
+      for (var i = 0; i < raw.length; i++){
+        var ch = raw[i];
+        if (LETTER_VALUES[ch] != null){ total += LETTER_VALUES[ch]; counted.push(ch + " (" + toMy(LETTER_VALUES[ch]) + ")"); }
+        else if (ch.trim() !== "" && /[\u1000-\u109F]/.test(ch)){ /* vowel signs & marks ignored */ }
+      }
+      if (total === 0){
+        box.innerHTML = "<p>မြန်မာ အက္ခရာ အခြေခံ စာလုံးတွေ မတွေ့ရပါ။ မြန်မာလို နာမည်အပြည့် ရေးထည့်ပါ (ဥပမာ — မောင်မောင်၊ မအေးအေး)။</p>";
+        return;
+      }
+      var reduced = total;
+      var steps = [total];
+      while (reduced > 9){
+        reduced = String(reduced).split("").reduce(function(a, c){ return a + (+c); }, 0);
+        steps.push(reduced);
+      }
+      var m = NUM_MEANINGS[reduced];
+      box.innerHTML =
+        '<div class="result-head">' +
+          '<div class="animal-badge"><span class="glyph" style="font-size:38px;">' + toMy(reduced) + '</span><span class="cap">' + m.name + "</span></div>" +
+          "<div><h3>“" + esc(raw) + "” ရဲ့ ကံဂဏန်း — " + toMy(reduced) + "</h3>" +
+          "<p>" + m.theme + "</p></div>" +
+        "</div>" +
+        '<div class="reading" style="margin-top:0;">' +
+          "<h4>တွက်ပုံ</h4><p>အက္ခရာ အလိုက် — " + counted.join("၊ ") + "<br/>စုစုပေါင်း — " + steps.map(toMy).join(" → ") + "</p>" +
+          "<h4>အဟော</h4><p>" + m.text + "</p>" +
+        "</div>";
+      box.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    /* ================= Compatibility panel ================= */
+    el("loveForm").addEventListener("submit", function(ev){
+      ev.preventDefault();
+      var v1 = el("loveDate1").value, v2 = el("loveDate2").value;
+      if (!v1 || !v2) return;
+      function parse(v){ var p = v.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+      var d1 = parse(v1), d2 = parse(v2);
+      var e1 = dayEntity(d1, ""), e2 = dayEntity(d2, "");
+      var i1 = DAYS.indexOf(e1), i2 = DAYS.indexOf(e2);
+      var base = pairScore(i1, i2);
+      var b1 = ((myanmarYear(d1) % 7) + 7) % 7, b2 = ((myanmarYear(d2) % 7) + 7) % 7;
+      var boteBonus = (b1 === b2) ? 4 : (Math.abs(b1 - b2) === 3 ? 2 : 0);
+      var score = Math.max(35, Math.min(99, base + boteBonus));
+      var vd = verdictOf(score);
+      var box = el("loveResult");
+      box.classList.remove("hidden");
+      box.innerHTML =
+        '<div class="heart-wrap"><div class="heart-score">' + toMy(score) + '%</div><div class="heart-verdict">' + vd.t + "</div></div>" +
+        '<div class="vs-row">' +
+          '<div class="vs-box"><div class="glyph">' + e1.glyph + '</div><div class="nm">' + e1.name + "နေ့ဖွား</div>" +
+          '<div class="dt2">' + e1.animal + " ・ " + MAHABOTE[b1].name + "ဘုတ်</div></div>" +
+          '<div class="vs-mid">♥</div>' +
+          '<div class="vs-box"><div class="glyph">' + e2.glyph + '</div><div class="nm">' + e2.name + "နေ့ဖွား</div>" +
+          '<div class="dt2">' + e2.animal + " ・ " + MAHABOTE[b2].name + "ဘုတ်</div></div>" +
+        "</div>" +
+        '<div class="reading"><h4>အဟော</h4><p>' + vd.d + "</p>" +
+        "<p>" + e1.name + "နေ့ဖွားရဲ့ အားသာချက်က " + e1.strength + " ဖြစ်ပြီး၊ " + e2.name + "နေ့ဖွားရဲ့ အားသာချက်က " + e2.strength + " ဖြစ်ပါတယ်။ နှစ်ဦးရဲ့ အားသာချက်တွေ ပေါင်းစပ်နိုင်ရင် ဆက်ဆံရေး ပိုမို ခိုင်မာလာပါမယ်။</p></div>";
+      box.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    </script>
+  </body>
+</html>
