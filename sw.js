@@ -1,5 +1,5 @@
-/* Myanmar Baydin PWA - v4.2 (hero-wheel div fix; network-first for pages, so fixes reach installed users) */
-const CACHE = "baydin-v4.2";
+/* Myanmar Baydin PWA - v4.3 (honesty update; network-first for pages, so fixes reach installed users) */
+const CACHE = "baydin-v4.3";
 const ASSETS = ["./", "./index.html", "./manifest.webmanifest",
   "./icon-192.png", "./icon-512.png", "./icon-512-maskable.png", "./icon-180.png",
   "./myanmar-calendar.js", "./auspicious.js", "./astronomy.browser.js", "./chart.js", "./i18n.js",

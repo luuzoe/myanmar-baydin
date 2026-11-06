@@ -102,7 +102,7 @@
       verdict62t: "အလယ်အလတ် လိုက်ဖက်ပါတယ်",
       verdict62d: "စိတ်သဘာဝ မတူတဲ့ အပိုင်းတွေ ရှိပေမယ့် လေးစား နားလည်မှု ထားရင် ကောင်းမွန်တဲ့ ဆက်ဆံရေး ဖြစ်လာနိုင်ပါတယ်။",
       verdictLowt: "ကြိုးစား နားလည်ဖို့ လိုပါတယ်",
-      verdictLowd: "နေ့နံ အရ ရန်ဖက် သဘော ပါတဲ့အတွက် အငြင်းပွားမှု ဖြစ်လွယ်ပါတယ်။ စိတ်ရှည်မှု၊ ခွင့်လွှတ်မှုနဲ့ ဆက်သွယ်မှု ကောင်းကောင်း ထားမှ ရေရှည် အဆင်ပြေပါမယ်။",
+      verdictLowd: "နေ့နံ အရ ရန်ဖက် သဘော ပါတဲ့အတွက် အငြင်းပွားမှု ဖြစ်လွယ်ပြီး ရေရှည် အဆင်မပြေနိုင်ဘူး။ စိတ်ရှည်မှု၊ ခွင့်လွှတ်မှုနဲ့ ဆက်သွယ်မှု ကောင်းကောင်း ထားမှ အဆင်ပြေနိုင်ပါမယ်။",
       ordinaryDay: "သာမန် ရက်", pyathadaDay: "ပြဿဒါး နေ့ ⚠", razaDay: "ရက်ရာဇာ နေ့ ✓",
       pyathadaNote: "ဒီရက်ဟာ {0}လရဲ့ ပြဿဒါး နေ့ ဖြစ်လို့ အရေးကြီး ကိစ္စတွေ ရှောင်တာ ပိုကောင်းပါတယ်။",
       razaNote: "ဒီရက်ဟာ {0}လရဲ့ ရက်ရာဇာ နေ့ ဖြစ်လို့ အရေးကြီး ကိစ္စတွေ လုပ်ဖို့ သင့်တော်ပါတယ်။",
@@ -214,7 +214,7 @@
       verdict62t: "A moderate match",
       verdict62d: "You differ in some ways, but with respect and understanding this can become a good relationship.",
       verdictLowt: "Needs effort and understanding",
-      verdictLowd: "By birth day there is a clashing quality, so arguments come easily. Patience, forgiveness and good communication are needed for the long term.",
+      verdictLowd: "By birth day there is a clashing quality, so arguments come easily and the long term may not work out. Patience, forgiveness and good communication are needed for it to work.",
       ordinaryDay: "Ordinary day", pyathadaDay: "Pyathada day ⚠", razaDay: "Raza day ✓",
       pyathadaNote: "This is a Pyathada day in {0}, so it is better to avoid important matters.",
       razaNote: "This is a Raza day in {0}, so it is a good day for important matters.",
@@ -330,13 +330,13 @@
       meaning: "Adipati is the highest of the seven botes, and its people often become leaders in their own field. They decide firmly and are relied on and respected by many. Starting their own business tends to succeed.",
       advice: "Take on big responsibilities boldly, but also listen to good advice." },
     4: { name: "Marana", tag: "Change and endings",
-      meaning: "Marana-born people experience many changes in life. Work, place and surroundings often change, but every ending opens the door to a new beginning. Health needs special care.",
-      advice: "Don't fear change — the new begins only after the old ends. Have regular health check-ups." },
+      meaning: "Marana-born people experience many changes in life. Tradition counts Marana as the most difficult of the seven botes — work, place and surroundings often change, and health and accidents need special care. But every ending opens the door to a new beginning.",
+      advice: "Don't fear change — the new begins only after the old ends. Have regular health check-ups, be careful with risky things. Doing good deeds brings benefit." },
     5: { name: "Thaik", tag: "Wealth and saving",
       meaning: "Thaik-born people can save and accumulate money, and their wealth grows. They have a sharp eye for trade and investment, and become richer over time.",
       advice: "Keep the saving habit. Hold back the urge to take profits too quickly from investments." },
     6: { name: "Puti", tag: "Caution and preparation",
-      meaning: "Puti-born people find work easily disrupted, with many obstacles. But with good preparation they can overcome difficulties, learn from experience and become strong. Doing good deeds brings benefit.",
+      meaning: "Puti-born people find work easily disrupted, with many obstacles. Tradition counts it among the worst botes, and money and work difficulties are common. But with good preparation they can overcome difficulties, learn from experience and become strong. Doing good deeds brings benefit.",
       advice: "Check documents carefully before starting work, and keep a backup plan. Good deeds and a good heart bring luck back." }
   };
 
@@ -385,35 +385,41 @@
       "Today your relationships with friends are good, and help may come your way.",
       "Today stay calm and focus on your own work. Don't get troubled by small matters.",
       "Today your hard work will show results. Don't give up.",
-      "Today give yourself time to rest too. Less stress means better work."
+      "Today give yourself time to rest too. Less stress means better work.",
+      "Today is not a good day for important decisions — better to think it over tomorrow.",
+      "Today you may face something upsetting. Stay calm and don't react in anger."
     ],
     WORK: [
       "You may get a new responsibility at work, a chance to show your ability.",
       "Working together with colleagues will finish the job faster.",
       "Check work documents carefully before signing.",
       "In a meeting or discussion, your idea may be accepted.",
-      "If you are thinking of changing jobs, gather information today."
+      "If you are thinking of changing jobs, gather information today.",
+      "A mistake may happen at work today — check twice before submitting."
     ],
     MONEY: [
       "Income and spending are balanced — a good day to save.",
       "Cutting unnecessary expenses will make the end of the month easier.",
       "Don't rush into investments; study them carefully.",
       "You may settle part of a debt.",
-      "You may hear news of a new source of income."
+      "You may hear news of a new source of income.",
+      "Today money may flow out fast — don't buy what you don't need."
     ],
     LOVE: [
       "Understanding with your partner or spouse will grow. Speak sweetly.",
       "For single people, a meeting with someone new is possible.",
       "Don't bring up old matters from the past. Value the present.",
       "Spending time with family will bring happiness.",
-      "Speaking your feelings openly will improve the relationship."
+      "Speaking your feelings openly will improve the relationship.",
+      "Today an argument is possible — don't speak in anger; listen to each other."
     ],
     HEALTH: [
       "Your health is good, but eat regularly and drink plenty of water.",
       "Take care to sleep well; headaches will ease.",
       "A little walking exercise will refresh your mind.",
       "If stress is high, try breathing exercises.",
-      "If your eyes are tired from close work, rest them."
+      "If your eyes are tired from close work, rest them.",
+      "Today take care of your health — do less tiring work and rest early."
     ]
   };
 
