@@ -924,6 +924,7 @@
       });
     });
     function switchTab(name){
+      trackEvent("tab_view", { tab: name });
       tabBtns.forEach(function(b){ b.classList.toggle("active", b.getAttribute("data-tab") === name); });
       document.querySelectorAll(".panel").forEach(function(p){ p.classList.remove("active"); });
       el("panel-" + name).classList.add("active");
@@ -1018,6 +1019,28 @@
       window.addEventListener("resize", function(){ size(); seed(); });
     })();
 
+    /* ================= Analytics (v4.4) =================
+       Zaw: paste the Google Analytics Measurement ID for the Baydin
+       data stream here (Analytics -> Admin -> Data Streams -> Web -> G-...).
+       Empty = analytics stays off, no errors, nothing is sent. */
+    var GA_MEASUREMENT_ID = "";
+    function loadAnalytics(){
+      if (!GA_MEASUREMENT_ID || GA_MEASUREMENT_ID.indexOf("G-") !== 0) return;
+      if (typeof window === "undefined" || typeof document === "undefined") return;
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+      var s = document.createElement("script");
+      s.async = true;
+      s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_MEASUREMENT_ID;
+      document.head.appendChild(s);
+      window.gtag("js", new Date());
+      window.gtag("config", GA_MEASUREMENT_ID);
+    }
+    function trackEvent(name, params){
+      try { if (typeof window !== "undefined" && typeof window.gtag === "function") window.gtag("event", name, params || {}); } catch (e) {}
+    }
+    loadAnalytics();
+
     /* ================= Day grid (နေ့နံ ၈ ပါး) ================= */
     (function(){
       var grid = el("dayGrid");
@@ -1043,6 +1066,93 @@
       });
     })();
 
+    /* ================= Computed day sky (v4.4) =================
+       The daily forecast is computed from TODAY'S real Moon/Sun
+       positions (Astronomy Engine) - not a seeded template pick.
+       Moon sign vs the user's sign (aspect), Moon phase, Raza/Pyathada
+       and the Moon's nakshatra drive the score and the text. */
+    var DAY_ASPECT_BASE = { 0: 78, 1: 70, 2: 82, 3: 52, 4: 88, 5: 62, 6: 48 };
+    var calcLuckToken = 0, zodiacToken = 0;
+    function aspectOf(moonSign, userSign){
+      var d = ((moonSign - userSign) % 12 + 12) % 12;
+      if (d > 6) d = 12 - d;
+      return d;
+    }
+    function computeDaySky(date, userSign){
+      return loadChartLibs().then(function(){
+        var y = date.getFullYear(), mo = date.getMonth() + 1, d = date.getDate();
+        var longs = ChartCalc.planetLongitudes(y, mo, d, 12, 0);
+        var moonSg = ChartCalc.signOf(longs.Moon);
+        var sunSg = ChartCalc.signOf(longs.Sun);
+        var nak = ChartCalc.nakshatra(longs.Moon);
+        var myd = (typeof MyanmarCal !== "undefined" && MyanmarCal.toMyanmar) ? MyanmarCal.toMyanmar(date) : null;
+        var phase = myd ? myd.moonPhase : "waxing";
+        var ci = date.getDay();
+        var raza = false, pyathada = false;
+        if (myd && typeof AUSPICIOUS !== "undefined"){
+          raza = (AUSPICIOUS.MONTH_RAZA[myd.monthIndex] || []).indexOf(ci) !== -1;
+          pyathada = (AUSPICIOUS.MONTH_PYATHADA[myd.monthIndex] || []).indexOf(ci) !== -1;
+        }
+        var asp = (userSign == null) ? null : aspectOf(moonSg.index, userSign);
+        var base = (asp == null) ? 70 : DAY_ASPECT_BASE[asp];
+        if (myd && myd.isFullMoon) base += 5;
+        else if (myd && myd.isNewMoon) base -= 3;
+        else if (phase === "waxing") base += 3;
+        else base -= 2;
+        if (pyathada) base -= 8;
+        else if (raza) base += 5;
+        var score = Math.max(35, Math.min(98, base));
+        return {
+          moonSign: moonSg.index, sunSign: sunSg.index,
+          moonLon: longs.Moon, sunLon: longs.Sun,
+          nak: nak, phase: phase,
+          moonDay: myd ? myd.moonDay : 8,
+          isFullMoon: !!(myd && myd.isFullMoon), isNewMoon: !!(myd && myd.isNewMoon),
+          raza: raza, pyathada: pyathada, aspect: asp, score: score,
+          luckyNum: (nak.index % 9) + 1,
+          luckyColor: LUCKY_COLORS[[0, 2, 5, 3][moonSg.index % 4]]
+        };
+      });
+    }
+    function dayForecastText(sky){
+      var parts = [];
+      parts.push(T("skyToday", [zodiacDisplay(ZODIAC[sky.moonSign]), zodiacDisplay(ZODIAC[sky.sunSign])]));
+      if (sky.aspect != null) parts.push(T("aspect" + sky.aspect));
+      if (sky.isFullMoon) parts.push(T("phaseFull"));
+      else if (sky.isNewMoon) parts.push(T("phaseNew"));
+      else parts.push(T(sky.phase === "waxing" ? "phaseWaxing" : "phaseWaning"));
+      if (sky.pyathada) parts.push(T("todayPyathadaWarn"));
+      else if (sky.raza) parts.push(T("todayRazaGood"));
+      var nakName = (window.BAYDIN_LANG === "en" && window.BAYDIN_NAKSHATRA_EN) ? window.BAYDIN_NAKSHATRA_EN[sky.nak.index] : sky.nak.nameMy;
+      parts.push(T("moonNakshatra", [nakName, CHART_PLANET_MY[sky.nak.lord]]));
+      parts.push(T("computedNote"));
+      return parts.join(" ");
+    }
+    function dayLuckShort(sky){
+      var parts = [];
+      if (sky.aspect != null) parts.push(T("aspect" + sky.aspect));
+      if (sky.isFullMoon) parts.push(T("phaseFull"));
+      else if (sky.isNewMoon) parts.push(T("phaseNew"));
+      else parts.push(T(sky.phase === "waxing" ? "phaseWaxing" : "phaseWaning"));
+      if (sky.pyathada) parts.push(T("todayPyathadaWarn"));
+      else if (sky.raza) parts.push(T("todayRazaGood"));
+      return parts.join(" ");
+    }
+    function fillCalcLuck(date, userSign, token){
+      computeDaySky(date, userSign).then(function(sky){
+        if (token !== calcLuckToken) return;
+        var sEl = el("calcLuckStars"), tEl = el("calcLuckText");
+        if (!sEl || !tEl) return;
+        var stars = Math.max(1, Math.min(5, Math.round(sky.score / 20)));
+        sEl.innerHTML = starRow(stars);
+        tEl.textContent = dayLuckShort(sky);
+      }, function(){
+        if (token !== calcLuckToken) return;
+        var tEl = el("calcLuckText");
+        if (tEl) tEl.textContent = T("forecastFallback");
+      });
+    }
+
     /* ================= Main calculator ================= */
     function starRow(n){
       var s = "";
@@ -1062,9 +1172,7 @@
       var rem = mb.index;
       var bote = mb.bote;
       var z = zodiacOf(date);
-      var todaySeed = dayOfYear(new Date()) + DAYS.indexOf(day) * 13;
-      var luckStars = seededRange(todaySeed, 3, 5);
-      var luckText = seededPick(DAILY_GENERAL, todaySeed + 3);
+      trackEvent("calculate", { type: "mahabote" });
 
       var diagram = "";
       BOTE_LAYOUT.forEach(function(cellVal, idx){
@@ -1099,7 +1207,7 @@
           "<h4>" + T("adviceH") + "</h4><p>" + bote.advice + "</p>" +
           "<h4>" + day.name + T("bornCharacter") + "</h4><p>" + day.trait + "</p>" +
           "<h4>" + T("strengthsCautionsH") + "</h4><p>" + T("strengthPrefix") + day.strength + "<br/>" + T("cautionPrefix") + day.caution + "</p>" +
-          "<h4>" + T("todayLuckH") + starRow(luckStars) + "</h4><p>" + luckText + "</p>" +
+          "<h4>" + T("todayLuckH") + '<span id="calcLuckStars">' + starRow(3) + '</span></h4><p id="calcLuckText">' + T("calculating") + "</p>" +
           '<p style="margin-top:14px;"><a href="#" id="goZodiac" style="color:var(--maroon);font-weight:700;">' + T("goZodiac") + '</a></p>' +
         "</div>" + shareBtnHtml() + '<button class="btn-share btn-save" type="button">' + T("saveBtn") + '</button>' + imageShareBtnHtml();
       el("calcResult").querySelector(".btn-share").addEventListener("click", function(){
@@ -1123,6 +1231,7 @@
         switchTab("zodiac");
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
+      fillCalcLuck(date, ZODIAC.indexOf(z), ++calcLuckToken);
     });
 
     /* ================= Zodiac panel ================= */
@@ -1133,15 +1242,11 @@
       grid.querySelectorAll(".z-card").forEach(function(c, ci){ c.classList.toggle("active", ci === i); });
       var z = ZODIAC[i];
       var seed = dayOfYear(new Date()) * 31 + i * 101;
-      var work = seededRange(seed + 1, 55, 98);
-      var money = seededRange(seed + 2, 50, 98);
-      var love = seededRange(seed + 3, 52, 99);
-      var health = seededRange(seed + 4, 58, 97);
-      var luckyNum = seededRange(seed + 5, 1, 99);
-      var luckyColor = seededPick(LUCKY_COLORS, seed + 6);
+      var myToken = ++zodiacToken;
       function meter(label, val){
         return '<div class="meter-row"><span>' + label + '</span><span class="meter"><i style="width:' + val + '%"></i></span><span class="pct">' + toMy(val) + "%</span></div>";
       }
+      function clampScore(v){ return Math.max(35, Math.min(98, v)); }
       el("zodiacResult").classList.remove("hidden");
       el("zodiacResult").innerHTML =
         '<div class="result-head">' +
@@ -1151,24 +1256,49 @@
         "</div>" +
         '<div class="reading" style="margin-top:0;">' +
           "<p>" + z.trait + "</p>" +
-          "<h4>" + T("todayForecastH") + "</h4><p>" + seededPick(DAILY_GENERAL, seed + 11) + "</p>" +
-          "<h4>" + T("workH") + "</h4><p>" + seededPick(DAILY_WORK, seed + 12) + "</p>" +
-          "<h4>" + T("moneyH") + "</h4><p>" + seededPick(DAILY_MONEY, seed + 13) + "</p>" +
-          "<h4>" + T("loveH") + "</h4><p>" + seededPick(DAILY_LOVE, seed + 14) + "</p>" +
-          "<h4>" + T("healthH") + "</h4><p>" + seededPick(DAILY_HEALTH, seed + 15) + "</p>" +
-          "<h4>" + T("luckLevelsH") + "</h4>" +
-          meter(T("workH"), work) + meter(T("moneyH"), money) + meter(T("loveH"), love) + meter(T("healthH"), health) +
-          "<h4>" + T("luckyNumColourH") + "</h4><p>" + T("numColourLine", [toMy(luckyNum), luckyColor]) + "</p>" +
+          "<h4>" + T("todayForecastH") + '</h4><p id="zodiacForecast">' + T("calculating") + "</p>" +
+          "<h4>" + T("luckLevelsH") + '</h4><div id="zodiacMeters"></div>' +
+          "<h4>" + T("luckyNumColourH") + '</h4><p id="zodiacLucky">' + T("calculating") + "</p>" +
         "</div>" + shareBtnHtml() + imageShareBtnHtml();
-      el("zodiacResult").querySelector(".btn-share").addEventListener("click", function(){
-        shareText(T("zodiacShare", [zodiacDisplay(z), toMy(work), toMy(money), toMy(love), toMy(health), toMy(luckyNum)]), this);
-      });
-      el("zodiacResult").querySelector(".btn-img").addEventListener("click", function(){
-        shareImageCard(T("zodiacImgTitle", [zodiacDisplay(z)]), [
-          T("zodiacImgL1", [toMy(work), toMy(money)]),
-          T("zodiacImgL2", [toMy(love), toMy(health)]),
-          T("zodiacImgL3", [toMy(luckyNum), luckyColor])
-        ], this);
+      function fillZodiac(vals, forecastText){
+        var fEl = el("zodiacForecast"); if (fEl) fEl.textContent = forecastText;
+        var mEl = el("zodiacMeters");
+        if (mEl) mEl.innerHTML = meter(T("workH"), vals.work) + meter(T("moneyH"), vals.money) + meter(T("loveH"), vals.love) + meter(T("healthH"), vals.health);
+        var lEl = el("zodiacLucky");
+        if (lEl) lEl.innerHTML = T("numColourLine", [toMy(vals.luckyNum), vals.luckyColor]);
+        var bs = el("zodiacResult").querySelector(".btn-share");
+        if (bs) bs.addEventListener("click", function(){
+          shareText(T("zodiacShare", [zodiacDisplay(z), toMy(vals.work), toMy(vals.money), toMy(vals.love), toMy(vals.health), toMy(vals.luckyNum)]), this);
+        });
+        var bi = el("zodiacResult").querySelector(".btn-img");
+        if (bi) bi.addEventListener("click", function(){
+          shareImageCard(T("zodiacImgTitle", [zodiacDisplay(z)]), [
+            T("zodiacImgL1", [toMy(vals.work), toMy(vals.money)]),
+            T("zodiacImgL2", [toMy(vals.love), toMy(vals.health)]),
+            T("zodiacImgL3", [toMy(vals.luckyNum), vals.luckyColor])
+          ], this);
+        });
+      }
+      computeDaySky(new Date(), i).then(function(sky){
+        if (myToken !== zodiacToken) return;
+        fillZodiac({
+          work: clampScore(sky.score),
+          money: clampScore(sky.score - 3),
+          love: clampScore(sky.score + 4),
+          health: clampScore(sky.score - 2),
+          luckyNum: sky.luckyNum, luckyColor: sky.luckyColor
+        }, dayForecastText(sky));
+        trackEvent("calculate", { type: "zodiac" });
+      }, function(){
+        if (myToken !== zodiacToken) return;
+        fillZodiac({
+          work: seededRange(seed + 1, 55, 98),
+          money: seededRange(seed + 2, 50, 98),
+          love: seededRange(seed + 3, 52, 99),
+          health: seededRange(seed + 4, 58, 97),
+          luckyNum: seededRange(seed + 5, 1, 99),
+          luckyColor: seededPick(LUCKY_COLORS, seed + 6)
+        }, seededPick(DAILY_GENERAL, seed + 11) + " " + T("forecastFallback"));
       });
     }
     (function(){
@@ -1247,6 +1377,7 @@
     /* ================= Compatibility panel ================= */
     el("loveForm").addEventListener("submit", function(ev){
       ev.preventDefault();
+      trackEvent("calculate", { type: "compatibility" });
       var v1 = el("loveDate1").value, v2 = el("loveDate2").value;
       if (!v1 || !v2) return;
       function parse(v){ var p = v.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
@@ -1463,6 +1594,7 @@
     });
     el("chartForm").addEventListener("submit", function(ev){
       ev.preventDefault();
+      trackEvent("calculate", { type: "chart" });
       var dv = el("chartDate").value;
       if (!dv) return;
       var box = el("chartResult");
