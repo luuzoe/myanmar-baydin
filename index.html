@@ -125,6 +125,26 @@
         .tabs{display:grid;grid-template-columns:1fr 1fr;overflow:visible;}
         .tab-btn{white-space:normal;text-align:center;padding:10px 8px;}
       }
+      /* ---------- Bottom nav (app-style, phones only) ---------- */
+      .bnav{display:none;}
+      @media (max-width:640px){
+        .tabs{display:none;}
+        .bnav{
+          display:flex;position:fixed;left:0;right:0;bottom:0;z-index:40;
+          background:var(--surface);border-top:1px solid var(--line);
+          box-shadow:0 -2px 12px rgba(92,18,32,.12);
+          padding:6px 2px calc(6px + env(safe-area-inset-bottom));
+        }
+        .bnav-btn{
+          flex:1;border:none;background:transparent;color:var(--ink-soft);
+          font-family:inherit;font-size:11.5px;font-weight:700;cursor:pointer;
+          display:flex;flex-direction:column;align-items:center;gap:2px;
+          padding:4px 1px;white-space:nowrap;
+        }
+        .bnav-btn .ic{font-size:19px;line-height:1;}
+        .bnav-btn.active{color:var(--maroon);}
+        body{padding-bottom:64px;}
+      }
       .panel{display:none;animation:fade .3s ease;}
       .panel.active{display:block;}
       @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
@@ -139,7 +159,7 @@
         padding:22px;margin-top:18px;scroll-margin-top:84px;
       }
       .reading{scroll-margin-top:84px;}
-      @media (max-width:640px){ .card{scroll-margin-top:176px;} .reading{scroll-margin-top:176px;} }
+      @media (max-width:640px){ .card{scroll-margin-top:16px;} .reading{scroll-margin-top:16px;} }
       .card h2{margin:0 0 4px;font-size:22px;color:var(--maroon-deep);}
       .card .sub{color:var(--ink-soft);margin:0 0 16px;font-size:15px;}
       .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
@@ -534,6 +554,15 @@
         <p data-en="These readings are based on traditional Myanmar astrology and are for entertainment and general interest only. Make important life decisions with your own judgement.">ဤဟောစာတမ်းများသည် မြန်မာ ရိုးရာ ဗေဒင် အယူအဆ အပေါ် အခြေခံပြီး ဖျော်ဖြေရေးနှင့် အထွေထွေ သိမှတ်ဖွယ် အတွက်သာ ဖြစ်ပါတယ်။ ဘဝ အဆုံးအဖြတ် ကြီးကြီးမားမားတွေကို ကိုယ်ပိုင် အသိဉာဏ်နဲ့ ဆုံးဖြတ်ပါ။</p>
       </footer>
     </div>
+
+    <nav class="bnav" id="bottomNav" aria-label="အောက်ခြေ မီနူး">
+      <button class="bnav-btn active" data-tab="calc" type="button"><span class="ic">★</span><span data-en="Mahabote">မဟာဘုတ်</span></button>
+      <button class="bnav-btn" data-tab="zodiac" type="button"><span class="ic">♈</span><span data-en="Zodiac">ရာသီခွင်</span></button>
+      <button class="bnav-btn" data-tab="name" type="button"><span class="ic">✎</span><span data-en="Name">နာမည်</span></button>
+      <button class="bnav-btn" data-tab="love" type="button"><span class="ic">♥</span><span data-en="Match">လိုက်ဖက်မှု</span></button>
+      <button class="bnav-btn" data-tab="goodday" type="button"><span class="ic">☀</span><span data-en="Good day">နေ့ကောင်း</span></button>
+      <button class="bnav-btn" data-tab="chart" type="button"><span class="ic">☽</span><span data-en="Chart">ဇာတာ</span></button>
+    </nav>
 
     <script src="./myanmar-calendar.js"></script>
     <script src="./auspicious.js"></script>
@@ -931,6 +960,7 @@
       btn.addEventListener("click", function(){
         tabBtns.forEach(function(b){ b.classList.remove("active"); });
         btn.classList.add("active");
+        document.querySelectorAll(".bnav-btn").forEach(function(b){ b.classList.toggle("active", b.getAttribute("data-tab") === btn.getAttribute("data-tab")); });
         document.querySelectorAll(".panel").forEach(function(p){ p.classList.remove("active"); });
         el("panel-" + btn.getAttribute("data-tab")).classList.add("active");
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -939,9 +969,17 @@
     function switchTab(name){
       trackEvent("tab_view", { tab: name });
       tabBtns.forEach(function(b){ b.classList.toggle("active", b.getAttribute("data-tab") === name); });
+      document.querySelectorAll(".bnav-btn").forEach(function(b){ b.classList.toggle("active", b.getAttribute("data-tab") === name); });
       document.querySelectorAll(".panel").forEach(function(p){ p.classList.remove("active"); });
       el("panel-" + name).classList.add("active");
     }
+    var bnavBtns = document.querySelectorAll(".bnav-btn");
+    bnavBtns.forEach(function(btn){
+      btn.addEventListener("click", function(){
+        switchTab(btn.getAttribute("data-tab"));
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
 
     /* ================= Header: today ================= */
     (function(){
