@@ -284,10 +284,10 @@
       }
       footer a{color:var(--maroon);font-weight:700;}
       footer .foot-links{margin-bottom:10px;font-size:15px;}
-      details.card summary{cursor:pointer;font-size:19px;font-weight:800;color:var(--maroon);list-style:none;}
-      details.card summary::-webkit-details-marker{display:none;}
-      details.card summary .chev{display:inline-block;transition:transform .2s;}
-      details.card[open ] summary .chev{transform:rotate(90deg);}
+      .about-modal{position:fixed;inset:0;z-index:60;background:rgba(40,8,16,.55);display:flex;align-items:center;justify-content:center;padding:20px;}
+      .about-modal[hidden]{display:none;}
+      .about-modal-card{background:var(--surface);border-radius:var(--radius);padding:22px 20px;max-width:520px;width:100%;max-height:80vh;overflow:auto;position:relative;box-shadow:var(--shadow);}
+      .about-close{position:absolute;top:8px;right:12px;border:none;background:transparent;font-size:19px;cursor:pointer;color:var(--ink-soft);}
 
       /* ---------- v4.1 UI/UX: starfield, hero wheel, reveal ---------- */
       #stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
@@ -547,12 +547,6 @@
         <div class="card hidden" id="chartResult" aria-live="polite"></div>
       </section>
 
-      <details class="card" id="about">
-        <summary><span class="chev">▸</span> <span data-en="About this site">ဒီ site အကြောင်း</span></summary>
-        <p class="sub" data-en="How the readings are calculated — plainly, with nothing hidden.">ဟောစာတမ်း တွက်ပုံကို ပွင့်ပွင့်လင်းလင်း ပြောထားပါတယ်။</p>
-        <p data-en="Mahabote and day-sign readings follow classical Myanmar tradition. The Myanmar calendar (months, moon phase, Raza and Pyathada) uses the traditional algorithm. Planet positions, ascendant, nakshatra and dasha are calculated exactly from astronomy (Astronomy Engine). The daily forecast is computed from today's real Moon position — not picked from a template. Bad results are shown plainly too, with practical advice.">မဟာဘုတ်၊ နေ့နံ ဟောစာတမ်းတွေက မြန်မာ ရိုးရာ နည်းအတိုင်း တွက်ပါတယ်။ မြန်မာ ပြက္ခဒိန် (လ၊ လဆန်း/လဆုတ်၊ ရာဇာ/ပြဿဒါး) ကို ရိုးရာ တွက်နည်းနဲ့ တွက်ပါတယ်။ ဂြိုဟ် နေရာ၊ လဂ်၊ နက္ခတ်၊ ဒသာတွေကို နက္ခတ္တဗေဒ (Astronomy Engine) နဲ့ အတိအကျ တွက်ပါတယ်။ နေ့စဉ် ဟောစာတမ်းကို ဒီနေ့ လရဲ့ အနေအထား အမှန်နဲ့ တွက်ပါတယ် — ကြိုရေးထားတဲ့ စာထဲက ရွေးတာ မဟုတ်ပါ။ ဆိုးတဲ့ အဖြေလည်း တိတိကျကျ ပြပေးပါတယ်။</p>
-      </details>
-
       <footer>
         <p class="foot-links"><a href="./privacy.html" data-en="Privacy Policy">ကိုယ်ရေးကိုယ်တာ မူဝါဒ</a> · <a id="aboutLink" href="#about" data-en="About">ဒီ site အကြောင်း</a></p>
         <p data-en="These readings are based on traditional Myanmar astrology and are for entertainment and general interest only. Make important life decisions with your own judgement.">ဤဟောစာတမ်းများသည် မြန်မာ ရိုးရာ ဗေဒင် အယူအဆ အပေါ် အခြေခံပြီး ဖျော်ဖြေရေးနှင့် အထွေထွေ သိမှတ်ဖွယ် အတွက်သာ ဖြစ်ပါတယ်။ ဘဝ အဆုံးအဖြတ် ကြီးကြီးမားမားတွေကို ကိုယ်ပိုင် အသိဉာဏ်နဲ့ ဆုံးဖြတ်ပါ။</p>
@@ -567,6 +561,15 @@
       <button class="bnav-btn" data-tab="goodday" type="button"><span class="ic">☀</span><span data-en="Good day">နေ့ကောင်း</span></button>
       <button class="bnav-btn" data-tab="chart" type="button"><span class="ic">☽</span><span data-en="Chart">ဇာတာ</span></button>
     </nav>
+
+    <div class="about-modal" id="aboutModal" hidden>
+      <div class="about-modal-card">
+        <button class="about-close" id="aboutClose" type="button" aria-label="Close">✕</button>
+        <h2 data-en="About this site">ဒီ site အကြောင်း</h2>
+        <p class="sub" data-en="How the readings are calculated — plainly, with nothing hidden.">ဟောစာတမ်း တွက်ပုံကို ပွင့်ပွင့်လင်းလင်း ပြောထားပါတယ်။</p>
+        <p data-en="Mahabote and day-sign readings follow classical Myanmar tradition. The Myanmar calendar (months, moon phase, Raza and Pyathada) uses the traditional algorithm. Planet positions, ascendant, nakshatra and dasha are calculated exactly from astronomy (Astronomy Engine). The daily forecast is computed from today's real Moon position — not picked from a template. Bad results are shown plainly too, with practical advice.">မဟာဘုတ်၊ နေ့နံ ဟောစာတမ်းတွေက မြန်မာ ရိုးရာ နည်းအတိုင်း တွက်ပါတယ်။ မြန်မာ ပြက္ခဒိန် (လ၊ လဆန်း/လဆုတ်၊ ရာဇာ/ပြဿဒါး) ကို ရိုးရာ တွက်နည်းနဲ့ တွက်ပါတယ်။ ဂြိုဟ် နေရာ၊ လဂ်၊ နက္ခတ်၊ ဒသာတွေကို နက္ခတ္တဗေဒ (Astronomy Engine) နဲ့ အတိအကျ တွက်ပါတယ်။ နေ့စဉ် ဟောစာတမ်းကို ဒီနေ့ လရဲ့ အနေအထား အမှန်နဲ့ တွက်ပါတယ် — ကြိုရေးထားတဲ့ စာထဲက ရွေးတာ မဟုတ်ပါ။ ဆိုးတဲ့ အဖြေလည်း တိတိကျကျ ပြပေးပါတယ်။</p>
+      </div>
+    </div>
 
     <script src="./myanmar-calendar.js"></script>
     <script src="./auspicious.js"></script>
@@ -984,8 +987,14 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
     });
+    var aboutModal = el("aboutModal");
+    function showAbout(){ if (aboutModal){ aboutModal.hidden = false; document.body.style.overflow = "hidden"; } }
+    function hideAbout(){ if (aboutModal){ aboutModal.hidden = true; document.body.style.overflow = ""; } }
     var aboutLink = el("aboutLink");
-    if (aboutLink) aboutLink.addEventListener("click", function(){ var d = el("about"); if (d) d.open = true; });
+    if (aboutLink) aboutLink.addEventListener("click", function(e){ e.preventDefault(); showAbout(); });
+    var aboutClose = el("aboutClose");
+    if (aboutClose) aboutClose.addEventListener("click", hideAbout);
+    if (aboutModal) aboutModal.addEventListener("click", function(e){ if (e.target === aboutModal) hideAbout(); });
 
     /* ================= Header: today ================= */
     (function(){
