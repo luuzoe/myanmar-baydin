@@ -1,9 +1,9 @@
 /* Myanmar Baydin PWA - v4.3 (honesty update; network-first for pages, so fixes reach installed users) */
-const CACHE = "baydin-v4.4";
+const CACHE = "baydin-v4.5";
 const ASSETS = ["./", "./index.html", "./manifest.webmanifest",
   "./icon-192.png", "./icon-512.png", "./icon-512-maskable.png", "./icon-180.png",
   "./myanmar-calendar.js", "./auspicious.js", "./astronomy.browser.js", "./chart.js", "./i18n.js",
-  "./sitemap.xml", "./robots.txt"];
+  "./sitemap.xml", "./robots.txt", "./privacy.html"];
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
 });
